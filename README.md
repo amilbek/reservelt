@@ -49,7 +49,10 @@ Follow these steps to set up and run the project locally.
 ### How to Run reservelt-backend
 ```bash
 cd reservelt-backend
+```
+```bash
 mvn clean install
+```
 
 Backend is available on http://localhost:8080
 
