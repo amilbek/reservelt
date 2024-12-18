@@ -59,6 +59,7 @@ Backend is available on http://localhost:8080
 Run the project
 
 Rest API Documentation (Open API): http://localhost:8080/swagger-ui/index.html#/
+
 GraphQL Documentation (Graphiql): http://localhost:8080/graphiql?path=/graphql
 
 ### How to Run reservelt-frontend
