@@ -1,6 +1,6 @@
-# ReserVelt
+# Reservelt
 
-**ReserVelt** is a modular application consisting of both backend and frontend components. It provides a robust platform for reservation management with a scalable backend and an intuitive frontend user interface.
+**Reservelt** is the application to reserve table online for restaurants.
 
 ---
 
@@ -20,17 +20,17 @@
 The repository contains the following directories:
 
 ### **`reservelt-backend`**
-- **Language/Framework**: Java
-- A RESTful API service that handles data storage, business logic, and integration with external services.
+- **Language/Framework**: Java, Spring Boot
+- REST API
+- GraphQL
+- H2 Embedded Database
 
 ### **`reservelt-frontend`**
 Contains the frontend components of the project:
 1. **`reservelt-vue`**:
    - **Framework**: Vue.js
-   - A modern, reactive frontend application for managing reservations with a dynamic user interface.
 2. **`reservelt`**:
-   - **Simple HTML Application**: Can be run using `npx http-server`.
-   - A lightweight frontend interface for basic operations.
+   - HTML, CSS, JavaScript
 
 ---
 
@@ -45,3 +45,34 @@ Follow these steps to set up and run the project locally.
    ```bash
    npm install -g @vue/cli
 
+   ```bash
+   npm install -g http-server
+
+
+### How to Run reservelt-backend
+```bash
+cd reservelt-backend
+mvn clean install
+
+Backend is available on http://localhost:8080
+
+Run the project
+
+Rest API Documentation (Open API): http://localhost:8080/swagger-ui/index.html#/
+GraphQL Documentation (Graphiql): http://localhost:8080/graphiql?path=/graphql
+
+### How to Run reservelt-frontend
+#### reservelt
+```bash
+cd reserverlt-frontend/reservelt
+npx http-server
+
+Frontend (without framework) is available on http://localhost:8081
+
+#### reservelt-vue
+```bash
+cd reserverlt-frontend/reservelt-vue
+npm install
+npm run dev
+
+Frontend (with Vue.js) is avaialble on http://localhost:3000/
