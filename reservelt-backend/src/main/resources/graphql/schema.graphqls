@@ -1,0 +1,109 @@
+scalar UUID
+
+type Query {
+    user: UserDto
+    restaurants:[RestaurantDTO]
+    restaurantById(id: ID!): RestaurantDTO
+    foodsByRestaurant(restaurantId: ID!): [FoodDTO]
+
+}
+
+
+type Mutation {
+    register_user(userRegisterDto: UserRegisterDto!): UserDto!
+    login_user(userLoginDto: UserLoginDto!): String!
+    edit_user(userEditDto: UserEditDto!): UserDto!
+    delete_user: String
+    change_password(changeUserPasswordDto: ChangeUserPasswordDto!): String
+
+    # Restaurant Mutation
+#    addRestaurant(name: String!, address: String!, phoneNumber: String, rating: Float): RestaurantDTO!
+}
+# Food DTO
+type FoodDTO {
+    id: ID
+    name: String
+    description: String
+    price: Float
+}
+# Restaurant DTO
+type RestaurantDTO {
+    id: ID
+    name: String
+    address: String
+    phoneNumber: String
+    rating: Float
+    foods: [FoodDTO]
+}
+
+"""
+User DTO
+"""
+type UserDto {
+    id: UUID!
+    firstName: String!
+    lastName: String!
+    birthDate: String!
+    country: CountryDto!
+    city: CityDto!
+    email: String!
+}
+
+"""
+Input DTO for User Registration
+"""
+input UserRegisterDto {
+    firstName: String!
+    lastName: String!
+    birthDate: String!
+    country: Int!
+    city: Int!
+    email: String!
+    password: String!
+    passwordConfirmation: String!
+}
+
+"""
+Input DTO for User Login
+"""
+input UserLoginDto {
+    email: String!
+    password: String!
+}
+
+"""
+Input DTO for User Edit
+"""
+input UserEditDto {
+    firstName: String!
+    lastName: String!
+    birthDate: String!
+    country: Int!
+    city: Int!
+}
+
+"""
+Input DTO for User Change Password
+"""
+input ChangeUserPasswordDto {
+    currentPassword: String!
+    newPassword: String!
+    newPasswordConfirmation: String!
+}
+
+"""
+Country DTO
+"""
+type CountryDto {
+    id: ID!
+    name: String!
+}
+
+"""
+City DTO
+"""
+type CityDto {
+    id: ID!
+    name: String!
+    country: CountryDto!
+}
