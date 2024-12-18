@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Password and password confirmation do not match.");
         }
 
-        if (Boolean.TRUE.equals(userRepository.existsByEmail(userRegisterDto.getEmail()))) {
+        if (userRepository.existsByEmail(userRegisterDto.getEmail())) {
             throw new IllegalArgumentException("Email is already taken.");
         }
 
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String authenticationToken(UserLoginDto userLoginDto) {
-        if (Boolean.FALSE.equals(userRepository.existsByEmail(userLoginDto.getEmail()))) {
+        if (!userRepository.existsByEmail(userLoginDto.getEmail())) {
             throw new BadCredentialsException("Bad credentials");
         }
         try {
