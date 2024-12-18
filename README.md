@@ -40,6 +40,7 @@ Follow these steps to set up and run the project locally.
 3. **Vue CLI** (for Vue-based frontend):
    ```bash
    npm install -g @vue/cli
+   ```
 
 
    ```bash
