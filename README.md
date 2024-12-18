@@ -42,10 +42,9 @@ Follow these steps to set up and run the project locally.
    npm install -g @vue/cli
    ```
 
-
    ```bash
    npm install -g http-server
-
+   ```
 
 ### How to Run reservelt-backend
 ```bash
@@ -63,14 +62,24 @@ GraphQL Documentation (Graphiql): http://localhost:8080/graphiql?path=/graphql
 #### reservelt
 ```bash
 cd reserverlt-frontend/reservelt
+```
+```bash
 npx http-server
+```
 
 Frontend (without framework) is available on http://localhost:8081
 
 #### reservelt-vue
 ```bash
 cd reserverlt-frontend/reservelt-vue
+```
+
+```bash
 npm install
+```
+
+```bash
 npm run dev
+```
 
 Frontend (with Vue.js) is avaialble on http://localhost:3000/
