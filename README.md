@@ -7,12 +7,8 @@
 ## Table of Contents
 1. [Project Structure](#project-structure)
 2. [Getting Started](#getting-started)
-3. [Backend - ReserVelt Backend](#backend---reservelt-backend)
-4. [Frontend - ReserVelt Frontend](#frontend---reservelt-frontend)
-5. [Running the Application](#running-the-application)
-6. [Technologies Used](#technologies-used)
-7. [License](#license)
-
+3. [Backend - Reservelt Backend](#backend---reservelt-backend)
+4. [Frontend - Reservelt Frontend](#frontend---reservelt-frontend)
 ---
 
 ## Project Structure
@@ -44,6 +40,7 @@ Follow these steps to set up and run the project locally.
 3. **Vue CLI** (for Vue-based frontend):
    ```bash
    npm install -g @vue/cli
+
 
    ```bash
    npm install -g http-server
