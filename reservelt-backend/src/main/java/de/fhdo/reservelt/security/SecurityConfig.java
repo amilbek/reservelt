@@ -34,11 +34,11 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/api/auth/**", "/restaurants/search", "/graphql/**", "/graphiql/**", "/api-docs/**", "/swagger-ui/**", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/users/**", "/api/users/**", "/api/restaurants/**").permitAll()//.hasAuthority("USER")
-                        .requestMatchers("/restaurants/**", "/api/restaurants/**").permitAll()//.hasAuthority("RESTAURANT")
-                        .requestMatchers("/admin/**", "/api/admin/**").permitAll() //.hasAuthority("")
-                        .requestMatchers("/auth/**", "/css/**", "/js/**", "/images/**", "/", "/restaurants/search").permitAll()
+                        .requestMatchers("/auth/**", "/api/auth/**", "/restaurants/search", "/api/restaurants/**", "/graphql/**",
+                                "/graphiql/**", "/api-docs/**", "/swagger-ui/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/users/**", "/api/users/**").hasAuthority("USER")
+                        .requestMatchers("/restaurants/**").hasAuthority("RESTAURANT")
+                        .requestMatchers("/admin/**", "/api/admin/**").hasAuthority("ADMIN")
                 )
                 .exceptionHandling(config -> {
                     config.authenticationEntryPoint((request, response, authException) -> {
