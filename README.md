@@ -68,7 +68,7 @@ GraphQL Documentation (Graphiql): http://localhost:8080/graphiql?path=/graphql
 cd reserverlt-frontend/reservelt
 ```
 ```bash
-npx http-server
+npx http-server -p 8081
 ```
 
 Frontend (without framework) is available on http://localhost:8081
