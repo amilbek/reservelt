@@ -1,123 +1,139 @@
 <template>
-    <div class="container mt-5">
-      <div id="userEditForm" class="alert alert-info mt-2">
-        <h2 class="form-signin-heading">Edit User</h2>
-        <div v-if="successMessage" style="color: green;">{{ successMessage }}</div>
-        <div v-if="errorMessage" style="color: red;">{{ errorMessage }}</div>
-        <form id="editUserForm" class="form-signin" @submit.prevent="handleSubmit">
-          <table>
-            <tbody>
-              <tr>
-                <th><label for="firstName">First Name</label></th>
-                <td>
-                  <input
-                    type="text"
-                    id="firstName"
-                    v-model="form.firstName"
-                    class="form-control"
-                    placeholder="First Name"
-                    required
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th><label for="lastName">Last Name</label></th>
-                <td>
-                  <input
-                    type="text"
-                    id="lastName"
-                    v-model="form.lastName"
-                    class="form-control"
-                    placeholder="Last Name"
-                    required
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th><label for="birthDate">Birth Date</label></th>
-                <td>
-                  <input
-                    type="date"
-                    id="birthDate"
-                    v-model="form.birthDate"
-                    class="form-control"
-                    required
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th><label for="country">Country</label></th>
-                <td>
-                  <select
-                      id="country"
-                      v-model="form.country"
-                      @change="fetchCities(form.country)"
-                      class="form-control"
+  <div class="container mt-5">
+    <div id="userEditForm" class="alert alert-info mt-2">
+      <h2 class="form-signin-heading">Edit User</h2>
+      <div v-if="successMessage" style="color: green">{{ successMessage }}</div>
+      <form
+        id="editUserForm"
+        class="form-signin"
+        @submit.prevent="handleSubmit"
+      >
+        <table>
+          <tbody>
+            <tr>
+              <th><label for="firstName">First Name</label></th>
+              <td>
+                <input
+                  type="text"
+                  id="firstName"
+                  v-model="form.firstName"
+                  class="form-control"
+                  placeholder="First Name"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <th><label for="lastName">Last Name</label></th>
+              <td>
+                <input
+                  type="text"
+                  id="lastName"
+                  v-model="form.lastName"
+                  class="form-control"
+                  placeholder="Last Name"
+                  required
+                />
+              </td>
+            </tr>
+            <tr>
+              <th><label for="birthDate">Birth Date</label></th>
+              <td>
+                <input
+                  type="date"
+                  id="birthDate"
+                  v-model="form.birthDate"
+                  class="form-control"
+                  required
+                />
+                <span v-if="errors.birthDate" class="text-danger" style="color: red">{{ errors.birthDate }}</span>
+              </td>
+            </tr>
+            <tr>
+              <th><label for="country">Country</label></th>
+              <td>
+                <select
+                  id="country"
+                  v-model="form.country"
+                  @change="fetchCities(form.country)"
+                  class="form-control-select"
+                >
+                  <option value="">Choose Country</option>
+                  <option
+                    v-for="country in countries"
+                    :key="country.id"
+                    :value="country.id"
                   >
-                    <option value="">Choose Country</option>
-                    <option v-for="country in countries" :key="country.id" :value="country.id">
-                      {{ country.name }}
-                    </option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <th><label for="city">City</label></th>
-                <td>
-                  <select id="city" v-model="form.city" class="form-control">
-                    <option value="">Choose City</option>
-                    <option v-for="city in cities" :key="city.id" :value="city.id">
-                      {{ city.name }}
-                    </option>
-                  </select>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-          <button id="submitEditButton" class="btn btn-lg btn-primary btn-block" type="submit">
-            Save Changes
-          </button>
-          <router-link to="/profile" class="btn btn-warning">Cancel</router-link>
-        </form>
-      </div>
+                    {{ country.name }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th><label for="city">City</label></th>
+              <td>
+                <select id="city" v-model="form.city" class="form-control-select">
+                  <option value="">Choose City</option>
+                  <option
+                    v-for="city in cities"
+                    :key="city.id"
+                    :value="city.id"
+                  >
+                    {{ city.name }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button
+          id="submitEditButton"
+          class="btn btn-lg btn-primary btn-block"
+          type="submit"
+        >
+          Save Changes
+        </button>
+        <router-link to="/profile" class="btn btn-warning">Cancel</router-link>
+      </form>
     </div>
-  </template>
-  
-  <script>
-  import { toggleGraphql } from "../utils/toggleGraphql";
-  
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
-  
-  export default {
-    data() {
-      return {
-        form: {
-          firstName: "",
-          lastName: "",
-          birthDate: "",
-          country: "",
-          city: "",
-        },
-        countries: [],
-        cities: [],
-        successMessage: "",
-        errorMessage: "",
+  </div>
+</template>
+
+<script>
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+export default {
+  data() {
+    return {
+      form: {
+        firstName: "",
+        lastName: "",
+        birthDate: "",
+        country: "",
+        city: "",
+      },
+      countries: [],
+      cities: [],
+      successMessage: "",
+      errors: {},
+    };
+  },
+  methods: {
+    async fetchUserData() {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        this.$router.push("/login");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       };
-    },
-    methods: {
-      fetchUserData() {
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-          this.$router.push("/login");
-          return;
-        }
-        const headers = {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        };
+
+      try {
         if (this.isGraphQL()) {
-          fetch(`${BASE_URL}/graphql`, {
+          const response = await fetch(`${BASE_URL}/graphql`, {
             method: "POST",
             headers,
             body: JSON.stringify({
@@ -133,86 +149,90 @@
                 }
               `,
             }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.errors) throw new Error(data.errors[0].message);
-              const user = data.data.user;
-              this.populateForm(user);
-            })
-            .catch((error) => {
-              this.errorMessage = error.message;
-            });
+          });
+
+          const responseData = await response.json();
+
+          if (!response.ok || responseData.errors) {
+            throw new Error(responseData.errors?.[0]?.message || "Failed to fetch user data.");
+          }
+
+          this.populateForm(responseData.data.user);
         } else {
-          fetch(`${BASE_URL}/api/users`, { headers })
-            .then((res) => {
-              if (!res.ok) throw new Error("Failed to fetch user data.");
-              return res.json();
-            })
-            .then((user) => this.populateForm(user))
-            .catch((error) => {
-              this.errorMessage = error.message;
-            });
+          const response = await fetch(`${BASE_URL}/api/users`, { headers });
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch user data.");
+          }
+
+          const user = await response.json();
+          this.populateForm(user);
         }
-      },
-      populateForm(user) {
-        this.form.firstName = user.firstName;
-        this.form.lastName = user.lastName;
-        this.form.birthDate = user.birthDate;
-        this.fetchCountries(user.country.id);
-        this.fetchCities(user.country.id, user.city.id);
-      },
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
+    },
+    populateForm(user) {
+      this.form.firstName = user.firstName;
+      this.form.lastName = user.lastName;
+      this.form.birthDate = user.birthDate;
+      this.fetchCountries(user.country.id);
+      this.fetchCities(user.country.id, user.city.id);
+    },
+    async fetchCountries(selectedCountryId = null) {
+      try {
+        const response = await fetch(`${BASE_URL}/auth/country-list`);
+        const countries = await response.json();
+        this.countries = countries;
 
-      fetchCountries(selectedCountryId = null) {
-        fetch(`${BASE_URL}/auth/country-list`)
-            .then((response) => response.json())
-            .then((countries) => {
-              this.countries = countries;
-              if (selectedCountryId) {
-                this.form.country = selectedCountryId;
-              }
-            })
-            .catch((error) => {
-              console.error("Error fetching countries:", error);
-            });
-      },
-
-      fetchCities(countryId, selectedCityId = null) {
-        if (!countryId) {
-          this.cities = [];
-          this.form.city = "";
-          return;
+        if (selectedCountryId) {
+          this.form.country = selectedCountryId;
         }
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    },
+    async fetchCities(countryId, selectedCityId = null) {
+      if (!countryId) {
+        this.cities = [];
+        this.form.city = "";
+        return;
+      }
 
-        fetch(`${BASE_URL}/auth/${countryId}/city-list`)
-            .then((response) => response.json())
-            .then((cities) => {
-              this.cities = cities;
-              if (selectedCityId) {
-                this.form.city = selectedCityId;
-              }
-            })
-            .catch((error) => {
-              console.error("Error fetching cities:", error);
-              this.cities = [];
-            });
-      },
+      try {
+        const response = await fetch(`${BASE_URL}/auth/${countryId}/city-list`);
+        const cities = await response.json();
+        this.cities = cities;
 
-      handleSubmit() {
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-          this.$router.push("/login");
-          return;
+        if (selectedCityId) {
+          this.form.city = selectedCityId;
         }
-        const headers = {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        };
-        const payload = { ...this.form };
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+        this.cities = [];
+      }
+    },
+    async handleSubmit() {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        this.$router.push("/login");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      try {
         if (this.isGraphQL()) {
-          payload.country = parseInt(payload.country, 10);
-          payload.city = parseInt(payload.city, 10);
-          fetch(`${BASE_URL}/graphql`, {
+          const payload = {
+            ...this.form,
+            country: parseInt(this.form.country, 10),
+            city: parseInt(this.form.city, 10),
+          };
+
+          const response = await fetch(`${BASE_URL}/graphql`, {
             method: "POST",
             headers,
             body: JSON.stringify({
@@ -225,42 +245,48 @@
               `,
               variables: { userEditDto: payload },
             }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.errors) throw new Error(data.errors[0].message);
-              localStorage.setItem("successMessage", "User details updated successfully!");
-              this.$router.push("/profile");
-            })
-            .catch((error) => {
-              this.errorMessage = error.message;
-            });
+          });
+
+          const responseData = await response.json();
+
+          if (!response.ok || responseData.errors) {
+            throw new Error(responseData.errors?.[0]?.message || "Failed to update user details.");
+          }
+
+          localStorage.setItem("successMessage", "User details updated successfully!");
+          this.$router.push("/profile");
         } else {
-          fetch(`${BASE_URL}/api/users/edit`, {
+          const response = await fetch(`${BASE_URL}/api/users/edit`, {
             method: "PUT",
             headers,
-            body: JSON.stringify(payload),
-          })
-            .then((res) => {
-              if (!res.ok) throw new Error("Failed to update user details.");
-              localStorage.setItem("successMessage", "User details updated successfully!");
-              this.$router.push("/profile");
-            })
-            .catch((error) => {
-              this.errorMessage = error.message;
-            });
+            body: JSON.stringify(this.form),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+
+            const errorMessage = errorData.message || "An error occurred.";
+            if (errorMessage.includes("User must be at least 18 years old")) {
+              this.errors = { birthDate: errorMessage };
+            } else {
+              this.errors = { general: errorMessage };
+            }
+            return;
+          }
+
+          localStorage.setItem("successMessage", "User details updated successfully!");
+          this.$router.push("/profile");
         }
-      },
-      isGraphQL() {
-        return window.location.href.includes("graphql");
-      },
-      handleToggleGraphql() {
-        toggleGraphql();
-      },
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
     },
-    mounted() {
-      this.fetchUserData();
+    isGraphQL() {
+      return window.location.href.includes("graphql");
     },
-  };
-  </script>
-  
+  },
+  async mounted() {
+    await this.fetchUserData();
+  },
+};
+</script>

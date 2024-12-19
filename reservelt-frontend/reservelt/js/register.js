@@ -1,8 +1,10 @@
 const BASE_URL = "http://localhost:8080";
 
-fetch(`${BASE_URL}/auth/country-list`)
-    .then(response => response.json())
-    .then(countries => {
+async function fetchCountries() {
+    try {
+        const response = await fetch(`${BASE_URL}/auth/country-list`);
+        const countries = await response.json();
+
         const countrySelect = document.getElementById('country');
         countrySelect.innerHTML = '<option value="">Choose Country</option>';
 
@@ -15,81 +17,65 @@ fetch(`${BASE_URL}/auth/country-list`)
 
         const selectedCountry = countrySelect.value;
         if (selectedCountry) {
-            populateCities(selectedCountry);
+            await populateCities(selectedCountry);
         }
-    })
-    .catch(error => console.error('Error fetching countries:', error));
-
-document.getElementById('country').addEventListener('change', function () {
-    const countryId = this.value;
-    const citySelect = document.getElementById('city');
-    citySelect.innerHTML = '<option value="">Choose City</option>';
-        
-    if (countryId) {
-        fetch(`${BASE_URL}/auth/${countryId}/city-list`)
-            .then(response => response.json())
-            .then(cities => {
-                cities.forEach(city => {
-                    const option = document.createElement('option');
-                    option.value = city.id;
-                    option.textContent = city.name;
-                    citySelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching cities:', error));
+    } catch (error) {
+        console.error('Error fetching countries:', error);
     }
-});
+}
+
+async function populateCities(countryId) {
+    try {
+        const citySelect = document.getElementById('city');
+        citySelect.innerHTML = '<option value="">Choose City</option>';
+
+        const response = await fetch(`${BASE_URL}/auth/${countryId}/city-list`);
+        const cities = await response.json();
+
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.id;
+            option.textContent = city.name;
+            citySelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Error fetching cities:', error);
+    }
+}
 
 function isGraphQL() {
     return window.location.href.includes('graphql');
 }
 
-document.getElementById('registerForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+async function handleFormSubmit(event) {
+    event.preventDefault();
 
-    const formData = new FormData(this);
+    const formData = new FormData(event.target);
     const jsonData = Object.fromEntries(formData.entries());
 
     if (isGraphQL()) {
         jsonData.country = parseInt(jsonData.country, 10);
         jsonData.city = parseInt(jsonData.city, 10);
-    }
 
-    if (isGraphQL()) {
-        fetch(`${BASE_URL}/graphql`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                query: `
-                mutation($userRegisterDto: UserRegisterDto!) {
-                    register_user(userRegisterDto: $userRegisterDto) {
-                        id
-                        firstName
-                        lastName
-                        email
-                        country {
+        try {
+            const response = await fetch(`${BASE_URL}/graphql`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: `
+                    mutation($userRegisterDto: UserRegisterDto!) {
+                        register_user(userRegisterDto: $userRegisterDto) {
                             id
-                            name
                         }
-                        city {
-                            id
-                            name
-                        }
-                    }
-                }`,
-                variables: { userRegisterDto: jsonData },
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
+                    }`,
+                    variables: { userRegisterDto: jsonData },
+                }),
+            });
+
+            const data = await response.json();
+
             if (data.errors) {
-                const firstErrorMessage = data.errors[0].message;
-                
-                const cleanErrorMessage = firstErrorMessage.replace('Invalid input: ', '').trim();
-
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = cleanErrorMessage;
-                errorMessage.style.display = 'block';
+                handleFieldErrors(data.errors);
                 return;
             }
 
@@ -97,39 +83,79 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
                 localStorage.setItem('successMessage', 'Successfully Registered!');
                 window.location.href = 'login.html';
             } else {
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = 'Registration failed! Please check the details.';
-                errorMessage.style.display = 'block';
+                displayGeneralError('Registration failed! Please check the details.');
             }
-        })
-        .catch(error => {
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = error.message || 'Registration failed!';
-            errorMessage.style.display = 'block';
+        } catch (error) {
+            displayGeneralError(error.message || 'Registration failed!');
             console.error('Error during registration:', error);
-        }); 
+        }
     } else {
-        fetch(`${BASE_URL}/api/auth/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(jsonData),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.id) {
+        try {
+            const response = await fetch(`${BASE_URL}/api/auth/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(jsonData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.id) {
                 localStorage.setItem('successMessage', 'Successfully Registered!');
                 window.location.href = 'login.html';
             } else {
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = data.error || 'Registration failed!';
-                errorMessage.style.display = 'block';
+                handleFieldErrors([{ message: data.message }]);
             }
-        })
-        .catch(error => {
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = error.message || 'Registration failed!';
-            errorMessage.style.display = 'block';
+        } catch (error) {
+            displayGeneralError(error.message || 'Registration failed!');
             console.error('Error during registration:', error);
-        }); 
+        }
     }
+}
+
+function handleFieldErrors(errors) {
+    clearFieldErrors();
+
+    errors.forEach((error) => {
+        if (error.message.includes('User must be at least 18 years old')) {
+            displayFieldError('birthDate', error.message);
+        } else if (error.message.includes('Password and password confirmation do not match')) {
+            displayFieldError('passwordConfirmation', error.message);
+        } else if (error.message.includes('Email is already taken')) {
+            displayFieldError('email', error.message);
+        } else if (error.message.includes('Password must be strong (at least 6 characters, one uppercase, one lowercase, one digit, and one special character)')) {
+            displayFieldError('password', error.message);
+        } else {
+            displayGeneralError(error.message);
+        }
+    });
+}
+
+function displayFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errorSpan = document.createElement('span');
+    errorSpan.className = 'field-error';
+    errorSpan.style.color = 'red';
+    errorSpan.textContent = message;
+    field.parentElement.appendChild(errorSpan);
+}
+
+function displayGeneralError(message) {
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+}
+
+function clearFieldErrors() {
+    document.querySelectorAll('.field-error').forEach((errorSpan) => errorSpan.remove());
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', fetchCountries);
+
+document.getElementById('country').addEventListener('change', function () {
+    const countryId = this.value;
+    populateCities(countryId);
 });
+
+document.getElementById('registerForm').addEventListener('submit', handleFormSubmit);

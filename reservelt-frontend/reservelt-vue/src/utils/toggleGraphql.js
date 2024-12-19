@@ -1,11 +1,13 @@
 export function toggleGraphql() {
-    const currentUrl = window.location.href;
+  const currentUrl = window.location.href;
 
-    if (currentUrl.includes('?graphql')) {
-        const newUrl = currentUrl.replace('?graphql', '');
-        window.history.pushState({}, '', newUrl);
-    } else {
-        const newUrl = currentUrl.includes('?') ? `${currentUrl}&graphql` : `${currentUrl}?graphql`;
-        window.history.pushState({}, '', newUrl);
-    }
+  if (currentUrl.includes('?graphql')) {
+    const newUrl = currentUrl.replace('?graphql', '');
+    window.history.pushState({}, '', newUrl);
+  } else {
+    const newUrl = currentUrl.includes('?')
+      ? `${currentUrl}&graphql`
+      : `${currentUrl}?graphql`;
+    window.history.pushState({}, '', newUrl);
+  }
 }

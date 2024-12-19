@@ -1,22 +1,22 @@
-BASE_URL = "http://localhost:8080"
+const BASE_URL = "http://localhost:8080";
 
-document.addEventListener('DOMContentLoaded', function () {
-  const successMessage = localStorage.getItem('successMessage');
+document.addEventListener('DOMContentLoaded', async function () {
+    const successMessage = localStorage.getItem('successMessage');
 
-  if (successMessage) {
-      const successMessageElement = document.getElementById('successMessage');
-      successMessageElement.textContent = successMessage;
-      successMessageElement.style.display = 'block';
+    if (successMessage) {
+        const successMessageElement = document.getElementById('successMessage');
+        successMessageElement.textContent = successMessage;
+        successMessageElement.style.display = 'block';
 
-      localStorage.removeItem('successMessage');
-  }
+        localStorage.removeItem('successMessage');
+    }
 });
 
 function isGraphQL() {
     return window.location.href.includes('graphql');
 }
 
-document.getElementById('loginForm').addEventListener('submit', function (event) {
+document.getElementById('loginForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const email = document.getElementById('username').value;
@@ -27,32 +27,31 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     errorMessage.textContent = '';
     successMessage.textContent = '';
 
-    if (isGraphQL()) {
-        fetch(`${BASE_URL}/graphql`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                query: `
-                    mutation {
-                        login_user(userLoginDto: { email: "${email}", password: "${password}" })
-                    }
-                `
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
+    try {
+        if (isGraphQL()) {
+            const response = await fetch(`${BASE_URL}/graphql`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: `
+                        mutation {
+                            login_user(userLoginDto: { email: "${email}", password: "${password}" })
+                        }
+                    `,
+                }),
+            });
+
+            const data = await response.json();
+
             if (data.errors) {
                 const firstErrorMessage = data.errors[0].message;
-                
                 const cleanErrorMessage = firstErrorMessage.replace('Invalid input: ', '').trim();
-
-                const errorMessage = document.getElementById('errorMessage');
                 errorMessage.textContent = cleanErrorMessage;
                 errorMessage.style.display = 'block';
                 return;
             }
-            
-            const token = data.data.login_user;
+
+            const token = data.data?.login_user;
             if (token) {
                 localStorage.setItem('authToken', token);
                 successMessage.textContent = 'Login successful! Redirecting...';
@@ -61,29 +60,21 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
             } else {
                 throw new Error('Token missing in response');
             }
-        })
-        .catch(error => {
-            console.error('Error during login:', error);
-            errorMessage.textContent = error.message || error.data || 'Login failed. Please try again.';
-            errorMessage.style.display = 'block';
-        });  
-    } else {
-        fetch(`${BASE_URL}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: email, password: password }),
-        })
-        .then(response => {
+        } else {
+            const response = await fetch(`${BASE_URL}/api/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
             if (!response.ok) {
-                return response.json().then(errorData => {
-                    throw errorData;
-                });
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Login failed');
             }
-            return response.text();
-        })
-        .then(token => {
+
+            const token = await response.text();
             if (token) {
                 localStorage.setItem('authToken', token);
                 successMessage.textContent = 'Login successful! Redirecting...';
@@ -92,11 +83,10 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
             } else {
                 throw new Error('Token missing in response');
             }
-        })
-        .catch(error => {
-            console.error('Error during login:', error);
-            errorMessage.textContent = error.message || error.data || 'Login failed. Please try again.';
-            errorMessage.style.display = 'block';
-        });  
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        errorMessage.textContent = error.message || 'Login failed. Please try again.';
+        errorMessage.style.display = 'block';
     }
 });
