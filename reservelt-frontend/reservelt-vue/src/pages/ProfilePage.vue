@@ -53,42 +53,42 @@
 </template>
 
 <script>
-import DeleteModal from "../components/DeleteModal.vue";
+  import DeleteModal from '../components/DeleteModal.vue';
 
-export default {
-  components: {
-    DeleteModal,
-  },
-  data() {
-    return {
-      user: null,
-      errorMessage: "",
-      successMessage: "",
-      showDeleteModal: false,
-      isGraphQL: window.location.href.includes("graphql"),
-      BASE_URL: import.meta.env.VITE_BASE_URL,
-    };
-  },
-  methods: {
-    async fetchUserProfile() {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        this.redirectToLogin();
-        return;
-      }
-
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+  export default {
+    components: {
+      DeleteModal,
+    },
+    data() {
+      return {
+        user: null,
+        errorMessage: '',
+        successMessage: '',
+        showDeleteModal: false,
+        isGraphQL: window.location.href.includes('graphql'),
+        BASE_URL: import.meta.env.VITE_BASE_URL,
       };
+    },
+    methods: {
+      async fetchUserProfile() {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          this.redirectToLogin();
+          return;
+        }
 
-      try {
-        if (this.isGraphQL) {
-          const response = await fetch(`${this.BASE_URL}/graphql`, {
-            method: "POST",
-            headers,
-            body: JSON.stringify({
-              query: `
+        const headers = {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        };
+
+        try {
+          if (this.isGraphQL) {
+            const response = await fetch(`${this.BASE_URL}/graphql`, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify({
+                query: `
                 query {
                   user {
                     id
@@ -105,82 +105,95 @@ export default {
                   }
                 }
               `,
-            }),
+              }),
+            });
+
+            const responseData = await response.json();
+
+            if (!response.ok || responseData.errors) {
+              throw new Error(
+                responseData.errors?.[0]?.message || 'Failed to fetch profile.'
+              );
+            }
+
+            this.user = responseData.data.user;
+          } else {
+            const response = await fetch(`${this.BASE_URL}/api/users`, {
+              headers,
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error ${response.status}`);
+            }
+
+            this.user = await response.json();
+          }
+        } catch (error) {
+          this.handleError(error);
+        }
+      },
+      handleError(err) {
+        this.errorMessage = err.message || 'An error occurred.';
+      },
+      logout() {
+        localStorage.removeItem('authToken');
+        localStorage.setItem(
+          'successMessage',
+          'You have been logged out successfully!'
+        );
+        this.redirectToLogin();
+      },
+      redirectToLogin() {
+        this.$router.push('/login');
+      },
+      async confirmDelete() {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          this.redirectToLogin();
+          return;
+        }
+
+        const headers = {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        };
+        const deleteURL = this.isGraphQL
+          ? `${this.BASE_URL}/graphql`
+          : `${this.BASE_URL}/api/users/delete`;
+        const deleteBody = this.isGraphQL
+          ? JSON.stringify({ query: `mutation { delete_user }` })
+          : null;
+
+        try {
+          const response = await fetch(deleteURL, {
+            method: this.isGraphQL ? 'POST' : 'DELETE',
+            headers,
+            body: deleteBody,
           });
 
-          const responseData = await response.json();
-
-          if (!response.ok || responseData.errors) {
-            throw new Error(responseData.errors?.[0]?.message || "Failed to fetch profile.");
-          }
-
-          this.user = responseData.data.user;
-        } else {
-          const response = await fetch(`${this.BASE_URL}/api/users`, { headers });
-
           if (!response.ok) {
-            throw new Error(`HTTP error ${response.status}`);
+            throw new Error('Failed to delete account.');
           }
 
-          this.user = await response.json();
+          localStorage.removeItem('authToken');
+          localStorage.setItem(
+            'successMessage',
+            'Your account has been deleted successfully!'
+          );
+          this.redirectToLogin();
+        } catch (error) {
+          this.handleError(error);
         }
-      } catch (error) {
-        this.handleError(error);
-      }
+      },
     },
-    handleError(err) {
-      this.errorMessage = err.message || "An error occurred.";
-    },
-    logout() {
-      localStorage.removeItem("authToken");
-      localStorage.setItem("successMessage", "You have been logged out successfully!");
-      this.redirectToLogin();
-    },
-    redirectToLogin() {
-      this.$router.push("/login");
-    },
-    async confirmDelete() {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        this.redirectToLogin();
-        return;
+    async mounted() {
+      const successMessage = localStorage.getItem('successMessage');
+      if (successMessage) {
+        this.successMessage = successMessage;
+        localStorage.removeItem('successMessage');
       }
 
-      const headers = { Authorization: `Bearer ${token}` };
-      const deleteURL = this.isGraphQL
-        ? `${this.BASE_URL}/graphql`
-        : `${this.BASE_URL}/api/users/delete`;
-      const deleteBody = this.isGraphQL
-        ? JSON.stringify({ query: `mutation { delete_user }` })
-        : null;
-
-      try {
-        const response = await fetch(deleteURL, {
-          method: this.isGraphQL ? "POST" : "DELETE",
-          headers,
-          body: deleteBody,
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to delete account.");
-        }
-
-        localStorage.removeItem("authToken");
-        localStorage.setItem("successMessage", "Your account has been deleted successfully!");
-        this.redirectToLogin();
-      } catch (error) {
-        this.handleError(error);
-      }
+      await this.fetchUserProfile();
     },
-  },
-  async mounted() {
-    const successMessage = localStorage.getItem("successMessage");
-    if (successMessage) {
-      this.successMessage = successMessage;
-      localStorage.removeItem("successMessage");
-    }
-
-    await this.fetchUserProfile();
-  },
-};
+  };
 </script>

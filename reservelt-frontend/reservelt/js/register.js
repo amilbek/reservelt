@@ -75,7 +75,9 @@ async function handleFormSubmit(event) {
             const data = await response.json();
 
             if (data.errors) {
-                handleFieldErrors(data.errors);
+                const firstErrorMessage = data.errors?.[0]?.message || "Login failed!";
+                const cleanErrorMessage = firstErrorMessage.replace('Invalid input: ', '').trim();
+                handleFieldErrors(cleanErrorMessage);
                 return;
             }
 

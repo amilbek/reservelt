@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <h2 class="form-signin-heading">Registration</h2>
-
+    <div v-if="errors.errorMessage" class="text-success" style="color: red">
+      {{ errors.errorMessage }}
+    </div>
     <form @submit.prevent="handleSubmit">
       <p>
         <label for="firstname" class="sr-only">First Name</label>
@@ -34,7 +36,9 @@
           class="form-control"
           required
         />
-        <span v-if="errors.birthDate" style="color: red">{{ errors.birthDate }}</span>
+        <span v-if="errors.birthDate" style="color: red">{{
+          errors.birthDate
+        }}</span>
       </p>
       <p>
         <label for="country">Country</label>
@@ -72,7 +76,9 @@
           placeholder="Email"
           required
         />
-        <span v-if="errors.email" class="error-message" style="color: red">{{ errors.email }}</span>
+        <span v-if="errors.email" class="error-message" style="color: red">{{
+          errors.email
+        }}</span>
       </p>
       <p>
         <label for="password" class="sr-only">Password</label>
@@ -84,7 +90,9 @@
           placeholder="Password"
           required
         />
-        <span v-if="errors.password" class="error-message" style="color: red">{{ errors.password }}</span>
+        <span v-if="errors.password" class="error-message" style="color: red">{{
+          errors.password
+        }}</span>
       </p>
       <p>
         <label for="passwordConfirmation" class="sr-only"
@@ -98,7 +106,12 @@
           placeholder="Password Confirmation"
           required
         />
-        <span v-if="errors.passwordConfirmation" class="error-message" style="color: red">{{ errors.passwordConfirmation }}</span>
+        <span
+          v-if="errors.passwordConfirmation"
+          class="error-message"
+          style="color: red"
+          >{{ errors.passwordConfirmation }}</span
+        >
       </p>
       <div class="btn-container">
         <button type="submit" class="btn">Sign up</button>
@@ -111,88 +124,176 @@
 </template>
 
 <script>
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export default {
-  data() {
-    return {
-      form: {
-        firstName: "",
-        lastName: "",
-        birthDate: "",
-        country: "",
-        city: "",
-        email: "",
-        password: "",
-        passwordConfirmation: "",
+  export default {
+    data() {
+      return {
+        form: {
+          firstName: '',
+          lastName: '',
+          birthDate: '',
+          country: '',
+          city: '',
+          email: '',
+          password: '',
+          passwordConfirmation: '',
+        },
+        errorMessage: '',
+        countries: [],
+        cities: [],
+        errors: {},
+        isGraphQL: window.location.href.includes('graphql'),
+      };
+    },
+    methods: {
+      async fetchCountries() {
+        try {
+          const response = await fetch(`${BASE_URL}/auth/country-list`);
+          this.countries = await response.json();
+        } catch (error) {
+          console.error('Error fetching countries:', error);
+        }
       },
-      countries: [],
-      cities: [],
-      errors: {},
-    };
-  },
-  methods: {
-    async fetchCountries() {
-      try {
-        const response = await fetch(`${BASE_URL}/auth/country-list`);
-        this.countries = await response.json();
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      }
-    },
-    async fetchCities() {
-      if (!this.form.country) return;
+      async fetchCities() {
+        if (!this.form.country) return;
 
-      try {
-        const response = await fetch(
-          `${BASE_URL}/auth/${this.form.country}/city-list`
-        );
-        this.cities = await response.json();
-      } catch (error) {
-        console.error("Error fetching cities:", error);
-      }
-    },
-    async handleSubmit() {
-      this.errors = {};
-      try {
-        const response = await fetch(`${BASE_URL}/api/auth/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(this.form),
-        });
+        try {
+          const response = await fetch(
+            `${BASE_URL}/auth/${this.form.country}/city-list`
+          );
+          this.cities = await response.json();
+        } catch (error) {
+          console.error('Error fetching cities:', error);
+        }
+      },
+      async handleSubmit() {
+        this.errors = {};
 
-        if (!response.ok) {
-          const errorData = await response.json();
+        if (this.isGraphQL) {
+          this.form.country = parseInt(this.form.country, 10);
+          this.form.city = parseInt(this.form.city, 10);
 
-          const errorMessage = errorData.message || "An error occurred.";
-          if (errorMessage.includes("Password must be strong (at least 6 characters, one uppercase, one lowercase, one digit, and one special character)")) {
-            this.errors = { password: errorMessage };
-          } else if (errorMessage.includes("Password and password confirmation do not match")) {
-            this.errors = { passwordConfirmation: errorMessage };
-          } else if (errorMessage.includes("User must be at least 18 years old")) {
-            this.errors = { birthDate: errorMessage };
-          } else if (errorMessage.includes("Email is already taken")) {
-            this.errors = { email: errorMessage };
-          } else {
-            this.errors = { general: errorMessage };
+          try {
+            const response = await fetch(`${BASE_URL}/graphql`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                query: `
+                    mutation($userRegisterDto: UserRegisterDto!) {
+                        register_user(userRegisterDto: $userRegisterDto) {
+                            id
+                        }
+                    }`,
+                variables: { userRegisterDto: this.form },
+              }),
+            });
+
+            const data = await response.json();
+
+            if (data.errors) {
+              const error = data.errors[0];
+              if (
+                error.message.includes('User must be at least 18 years old')
+              ) {
+                this.errors = {
+                  birthDate: 'User must be at least 18 years old',
+                };
+              } else if (
+                error.message.includes(
+                  'Password and password confirmation do not match'
+                )
+              ) {
+                this.errors = {
+                  passwordConfirmation:
+                    'Password and password confirmation do not match',
+                };
+              } else if (error.message.includes('Email is already taken')) {
+                this.errors = { email: 'Email is already taken' };
+              } else if (
+                error.message.includes(
+                  'Password must be strong (at least 6 characters, one uppercase, one lowercase, one digit, and one special character)'
+                )
+              ) {
+                this.errors = {
+                  password:
+                    'Password must be strong (at least 6 characters, one uppercase, one lowercase, one digit, and one special character)',
+                };
+              } else {
+                this.errors = { errorMessage: error };
+              }
+              return;
+            }
+
+            if (data.data?.register_user?.id) {
+              localStorage.setItem(
+                'successMessage',
+                'Successfully Registered!'
+              );
+              this.$router.push('/login');
+            } else {
+              this.errors = {
+                errorMessage: 'Registration failed! Please check the details.',
+              };
+            }
+          } catch (error) {
+            this.errors = { errorMessage: error };
+            console.error('Error during registration:', error);
           }
-          return;
-        }
+        } else {
+          try {
+            const response = await fetch(`${BASE_URL}/api/auth/register`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(this.form),
+            });
 
-        const data = await response.json();
+            if (!response.ok) {
+              const errorData = await response.json();
 
-        if (data.id) {
-          localStorage.setItem("successMessage", "Successfully Registered!");
-          window.location.href = "/login";
+              const errorMessage = errorData.message || 'An error occurred.';
+              if (
+                errorMessage.includes(
+                  'Password must be strong (at least 6 characters, one uppercase, one lowercase, one digit, and one special character)'
+                )
+              ) {
+                this.errors = { password: errorMessage };
+              } else if (
+                errorMessage.includes(
+                  'Password and password confirmation do not match'
+                )
+              ) {
+                this.errors = { passwordConfirmation: errorMessage };
+              } else if (
+                errorMessage.includes('User must be at least 18 years old')
+              ) {
+                this.errors = { birthDate: errorMessage };
+              } else if (errorMessage.includes('Email is already taken')) {
+                this.errors = { email: errorMessage };
+              } else {
+                this.errors = { errorMessage: errorMessage };
+              }
+              return;
+            }
+
+            const data = await response.json();
+
+            if (data.id) {
+              localStorage.setItem(
+                'successMessage',
+                'Successfully Registered!'
+              );
+              this.$router.push('/login');
+            }
+          } catch (error) {
+            console.error('Error during registration:', error);
+            this.errors.errorMessage = error.message;
+          }
         }
-      } catch (error) {
-        console.error("Error during registration:", error);
-        this.errors.general = error.message;
-      }
+      },
     },
-  },
-  async mounted() {
-    await this.fetchCountries();
-  },
-};
+    async mounted() {
+      await this.fetchCountries();
+    },
+  };
 </script>

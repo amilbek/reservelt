@@ -123,7 +123,8 @@ a:hover {
   cursor: pointer;
 }
 
-.btn-danger:hover, .btn-secondary:hover {
+.btn-danger:hover,
+.btn-secondary:hover {
   opacity: 0.8;
 }
 
