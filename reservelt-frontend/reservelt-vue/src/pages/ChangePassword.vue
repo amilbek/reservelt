@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="right-corner-btn">
+      <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+    </div>
     <form @submit.prevent="handleChangePassword" class="form-signin">
       <h2 class="form-signin-heading">Change Password</h2>
       <div v-if="successMessage" class="text-success" style="color: green">
@@ -184,6 +187,9 @@
           this.errorMessage =
             error.message || 'An error occurred while changing the password.';
         }
+      },
+      redirectToRestaurants() {
+        window.location.href = '/restaurants';
       },
     },
     mounted() {

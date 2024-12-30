@@ -1,5 +1,8 @@
 <template>
   <div class="container mt-5">
+    <div class="right-corner-btn">
+      <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+    </div>
     <h2 v-if="user" id="greeting">Welcome, {{ user.firstName }}!</h2>
     <div v-if="errorMessage" style="color: red">{{ errorMessage }}</div>
     <div v-if="successMessage" style="color: green">{{ successMessage }}</div>
@@ -184,6 +187,9 @@
         } catch (error) {
           this.handleError(error);
         }
+      },
+      redirectToRestaurants() {
+        window.location.href = '/restaurants';
       },
     },
     async mounted() {

@@ -131,3 +131,23 @@ a:hover {
 .bottom_btns {
   margin-right: 300px;
 }
+
+.right-corner-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000; /* Ensures it stays on top */
+}
+
+.right-corner-btn .btn {
+  background-color: #007bff; /* Customize button color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.right-corner-btn .btn:hover {
+  background-color: #0056b3; /* Hover color */
+}

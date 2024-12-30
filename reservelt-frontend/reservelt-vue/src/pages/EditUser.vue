@@ -1,5 +1,8 @@
 <template>
   <div class="container mt-5">
+    <div class="right-corner-btn">
+      <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+    </div>
     <div id="userEditForm" class="alert alert-info mt-2">
       <h2 class="form-signin-heading">Edit User</h2>
       <div v-if="successMessage" style="color: green">{{ successMessage }}</div>
@@ -316,6 +319,9 @@
       },
       isGraphQL() {
         return window.location.href.includes('graphql');
+      },
+      redirectToRestaurants() {
+        window.location.href = '/restaurants';
       },
     },
     async mounted() {

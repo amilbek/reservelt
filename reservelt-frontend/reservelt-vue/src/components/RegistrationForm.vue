@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="right-corner-btn">
+      <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+    </div>
     <h2 class="form-signin-heading">Registration</h2>
     <div v-if="errors.errorMessage" class="text-success" style="color: red">
       {{ errors.errorMessage }}
@@ -290,6 +293,9 @@
             this.errors.errorMessage = error.message;
           }
         }
+      },
+      redirectToRestaurants() {
+        window.location.href = '/restaurants';
       },
     },
     async mounted() {

@@ -33,11 +33,25 @@ const routes = [
     component: ChangePassword,
   },
   { path: '/restaurants', name: 'Restaurants', component: RestaurantSearch },
+  {
+    path: '/',
+    redirect: '/restaurants'
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    if (to.path !== '/restaurants' && to.path !== '/login' && to.path !== '/register') {
+      return next('/restaurants');
+    }
+  }
+  next();
 });
 
 export default router;
