@@ -9,6 +9,7 @@
           type="text"
           id="restaurantName"
           v-model="searchQuery"
+          @input="clearResults"
           placeholder="Enter restaurant name"
         />
       </div>
@@ -17,41 +18,53 @@
 
     <!-- Search Results -->
     <h1>Search Results</h1>
-    <div v-if="restaurants.length === 0">
+    <div v-if="isLoading">Loading...</div>
+    <div v-else-if="restaurants.length === 0">
       <h5>No restaurants found.</h5>
     </div>
 
     <div v-else class="search-results">
       <ul>
-        <li v-for="restaurant in restaurants" :key="restaurant.id">
+        <li v-for="restaurant in restaurants" :key="restaurant.name">
           <h2>{{ restaurant.name }}</h2>
           <p>Phone: {{ restaurant.phoneNumber }}</p>
           <p>Address: {{ restaurant.address }}</p>
           <p>Rating: {{ restaurant.rating }}</p>
+          <button @click="navigateToRestaurantDetails(restaurant.name)" class="more-button">
+            More
+          </button>
+
+
           <h3>Foods:</h3>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="food in restaurant.foods" :key="food.id">
-                <td>{{ food.id }}</td>
-                <td>{{ food.name }}</td>
-                <td>{{ food.description }}</td>
-                <td>€ {{ food.price }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div v-if="restaurant.foods && restaurant.foods.length > 0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="food in restaurant.foods" :key="food.id">
+                  <td>{{ food.id }}</td>
+                  <td>{{ food.name }}</td>
+                  <td>{{ food.description }}</td>
+                  <td>€ {{ food.price }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            
+          </div>
+          <p v-else>No foods available for this restaurant.</p>
         </li>
       </ul>
     </div>
   </div>
 </template>
+
 
 <script>
   export default {
@@ -59,30 +72,52 @@
       return {
         searchQuery: '',
         restaurants: [],
+        isLoading: false,
       };
     },
     methods: {
       async searchRestaurants() {
+        this.isLoading = true;
         try {
           const response = await fetch(
             `http://localhost:8080/api/restaurants/search?name=${this.searchQuery}`
           );
           if (response.ok) {
-            this.restaurants = await response.json();
+            const data = await response.json();
+
+            // Sanitize data
+            this.restaurants = Array.isArray(data)
+              ? data.map((restaurant) => ({
+                  ...restaurant,
+                  foods: Array.isArray(restaurant.foods) ? restaurant.foods : [],
+                }))
+              : [];
           } else {
             alert('Error fetching data');
           }
         } catch (error) {
           console.error('Error fetching restaurants:', error);
           alert('Error fetching restaurants.');
+        } finally {
+          this.isLoading = false;
         }
+      },
+      clearResults() {
+        if (!this.searchQuery.trim()) {
+          this.restaurants = [];
+        }
+      },
+      navigateToRestaurantDetails(restaurantName) {
+        const encodedName = encodeURIComponent(restaurantName);
+        const baseUrl = `${window.location.origin}/restaurant/${encodedName}`;
+        window.location.href = baseUrl;
       },
     },
   };
 </script>
 
+
 <style scoped>
-  /* General body styles */
   body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -101,7 +136,6 @@
     height: auto;
   }
 
-  /* Header styles */
   h1 {
     text-align: center;
     color: #42b883;
@@ -112,7 +146,6 @@
     text-align: left;
   }
 
-  /* Form Styles */
   .search-form {
     display: flex;
     justify-content: center;
@@ -148,11 +181,6 @@
     background-color: #366f53;
   }
 
-  /* Search results styles */
-  h2 {
-    color: #333;
-  }
-
   ul {
     list-style-type: none;
     padding: 0;
@@ -164,21 +192,6 @@
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  p {
-    text-align: left;
-  }
-
-  li h2 {
-    margin: 0 0 10px;
-    font-size: 24px;
-    color: #42b883;
-  }
-
-  li p {
-    margin: 5px 0;
-    font-size: 16px;
   }
 
   li table {
@@ -203,7 +216,6 @@
     background-color: #f9f9f9;
   }
 
-  /* No results message */
   .no-results {
     text-align: left;
     font-size: 18px;
