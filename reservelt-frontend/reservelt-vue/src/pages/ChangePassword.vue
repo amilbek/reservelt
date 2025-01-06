@@ -2,6 +2,7 @@
   <div class="container">
     <div class="right-corner-btn">
       <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+      <button type="button" class="btn" @click="redirectToMyReservations">My Reservations</button>
     </div>
     <form @submit.prevent="handleChangePassword" class="form-signin">
       <h2 class="form-signin-heading">Change Password</h2>
@@ -190,6 +191,9 @@
       },
       redirectToRestaurants() {
         window.location.href = '/restaurants';
+      },
+      redirectToMyReservations() {
+        window.location.href = '/my-reservations';
       },
     },
     mounted() {

@@ -13,6 +13,12 @@ body {
     width: 100%;
 }
 
+.no-reservations {
+    text-align: center;
+    color: gray;
+    margin-top: 20px;
+}
+
 .form-signin-heading {
     text-align: center;
     font-size: 24px;

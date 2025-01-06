@@ -2,6 +2,7 @@
   <div class="container mt-5">
     <div class="right-corner-btn">
       <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+      <button type="button" class="btn" @click="redirectToMyReservations">My Reservations</button>
     </div>
     <h2 v-if="user" id="greeting">Welcome, {{ user.firstName }}!</h2>
     <div v-if="errorMessage" style="color: red">{{ errorMessage }}</div>
@@ -190,6 +191,9 @@
       },
       redirectToRestaurants() {
         window.location.href = '/restaurants';
+      },
+      redirectToMyReservations() {
+        window.location.href = '/my-reservations';
       },
     },
     async mounted() {

@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <div class="right-corner-btn">
+      <button type="button" class="btn" @click="redirectToProfile">Profile</button>
+      <button type="button" class="btn" @click="redirectToLogin">Login</button>
+    </div>
     <h1>Search for Restaurants</h1>
 
     <!-- Search Form -->
@@ -111,6 +115,12 @@
         const encodedName = encodeURIComponent(restaurantName);
         const baseUrl = `${window.location.origin}/restaurant/${encodedName}`;
         window.location.href = baseUrl;
+      },
+      redirectToProfile() {
+        window.location.href = '/profile';
+      },
+      redirectToLogin() {
+        window.location.href = '/login';
       },
     },
   };

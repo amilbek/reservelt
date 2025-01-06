@@ -37,7 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/api/auth/**", "/restaurants/search", "/api/restaurants/**", "/graphql/**",
                                 "/graphiql/**", "/api-docs/**", "/swagger-ui/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/users/**", "/api/users/**").hasAuthority("USER")
-                        .requestMatchers("/restaurants/**").hasAuthority("RESTAURANT")
+                        .requestMatchers("/restaurants/**", "/api/restaurants/**").hasAuthority("USER")
                         .requestMatchers("/admin/**", "/api/admin/**").hasAuthority("ADMIN")
                 )
                 .exceptionHandling(config -> {

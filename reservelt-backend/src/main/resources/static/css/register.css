@@ -125,3 +125,10 @@ a:hover {
 .btn-danger:hover, .btn-secondary:hover {
     opacity: 0.8;
 }
+
+.right-corner-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensures it stays on top */
+}

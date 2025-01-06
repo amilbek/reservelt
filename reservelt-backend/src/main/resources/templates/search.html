@@ -9,8 +9,14 @@
 <body>
 
 <div class="container">
+    <div class="right-corner-btn">
+        <a href="/users" class="search-button">Profile</a>
+    </div>
     <h1>Search for Restaurants</h1>
 
+    <div th:if="${message}" th:classappend="${messageType == 'success' ? 'alert alert-success' : 'alert alert-danger'}" role="alert">
+        <span th:text="${message}"></span>
+    </div>
 
     <!-- Search Form -->
     <form th:action="@{/restaurants/search}" method="post" class="search-form">
@@ -53,6 +59,10 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <form th:action="@{/restaurants/save-table-reservation/{id}(id=${restaurant.id})}" method="post">
+                    <button type="submit" class="search-button">Reserve Table</button>
+                </form>
             </li>
         </ul>
     </div>

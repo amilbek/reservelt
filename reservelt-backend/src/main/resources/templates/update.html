@@ -11,6 +11,10 @@
 </head>
 <body>
 <div class="container mt-5">
+    <div class="right-corner-btn">
+        <a href="/restaurants/search" class="btn btn-success mb-3">Search Restaurants</a>
+        <a href="/restaurants/my-reservations" class="btn btn-warning">My Reservations</a>
+    </div>
     <div th:each="u : ${user}" class="alert alert -info mt-2">
         <form class="form-signin" method="post" action="/users/edit">
             <h2 class="form-signin-heading">Edit</h2>

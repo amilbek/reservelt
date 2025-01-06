@@ -159,7 +159,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.entityToDto(getCurrentUser());
     }
 
-    private User getCurrentUser() {
+    @Override
+    public User getCurrentUser() {
         return userRepository.findByEmail(Objects.requireNonNull(getCurrentUserEmail()).toString()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

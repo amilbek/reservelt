@@ -1,6 +1,7 @@
 package de.fhdo.reservelt.domain;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
@@ -17,6 +18,8 @@ public class Restaurant {
     private String address;
     private String phoneNumber;
     private String rating;
+    private Integer totalSeatCount;
+    private Integer availableSeatCount;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Food> foods;

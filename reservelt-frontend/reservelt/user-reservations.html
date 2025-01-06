@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Table Reservations</title>
+  <link rel="stylesheet" href="style/register.css" />
+</head>
+<body>
+
+<div class="container">
+  <div class="right-corner-btn">
+    <a href="profile.html" class="btn btn-success mb-3">Profile</a>
+  </div>
+
+  <h1>Your Table Reservations</h1>
+
+  <div id="no-reservations" class="no-reservations" style="display: none;">
+    <p>You have no table reservations.</p>
+  </div>
+
+  <div id="reservations-table" style="display: none;">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Restaurant Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody id="reservations-body">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="js/user-reservations.js"/>
+</body>
+</html>

@@ -13,6 +13,9 @@
 
 <body>
 <div class="container">
+  <div class="right-corner-btn">
+    <a href="/restaurants/search" class="btn btn-success mb-3">Search Restaurants</a>
+  </div>
   <form class="form-signin" method="post" action="/auth/login">
     <h2 class="form-signin-heading">Please sign in</h2>
     <div th:if="${session.errorMessage}">

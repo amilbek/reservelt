@@ -1,4 +1,3 @@
-c
 <template>
   <div>
     <LoginForm />

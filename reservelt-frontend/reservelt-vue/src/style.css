@@ -151,3 +151,38 @@ a:hover {
 .right-corner-btn .btn:hover {
   background-color: #0056b3; /* Hover color */
 }
+
+.no-reservations {
+  text-align: center;
+  color: gray;
+  margin-top: 20px;
+}
+
+.message {
+  margin-top: 20px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.message.success {
+  background: linear-gradient(90deg, #28a745, #218838);
+  color: #fff;
+  border: 1px solid #1e7e34;
+}
+
+.message.error {
+  background: linear-gradient(90deg, #dc3545, #c82333);
+  color: #fff;
+  border: 1px solid #bd2130;
+}

@@ -100,6 +100,8 @@ public class DummyDataBootstrap implements ApplicationListener<ContextRefreshedE
         resGrammons.setAddress("Wieckesweg 29, 44309 Dortmund");
         resGrammons.setPhoneNumber("+49 231 93144465");
         resGrammons.setRating("4.6");
+        resGrammons.setTotalSeatCount(20);
+        resGrammons.setAvailableSeatCount(20);
         restaurantRepository.save(resGrammons);
 
         Restaurant resTheStage = new Restaurant();
@@ -108,6 +110,8 @@ public class DummyDataBootstrap implements ApplicationListener<ContextRefreshedE
         resTheStage.setAddress("Dula Center, Nortkirchenstraße 53, 44263 Dortmund");
         resTheStage.setPhoneNumber("+49 231 2222550");
         resTheStage.setRating("4.7");
+        resTheStage.setTotalSeatCount(20);
+        resTheStage.setAvailableSeatCount(0);
 
         restaurantRepository.save(resTheStage);
 

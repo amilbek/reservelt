@@ -1,5 +1,6 @@
 package de.fhdo.reservelt.services;
 
+import de.fhdo.reservelt.domain.User;
 import de.fhdo.reservelt.dto.*;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,6 @@ public interface UserService {
     void changePassword(ChangeUserPasswordDto changeUserPasswordDto);
 
     UserDto getProfile();
+
+    User getCurrentUser();
 }

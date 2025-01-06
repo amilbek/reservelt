@@ -30,9 +30,16 @@
       </div>
       <div v-else-if="isLoading">Loading...</div>
       <div v-else>Failed to load restaurant details.</div>
+
+      <div v-if="message" :class="`message ${messageType}`">
+        {{ message }}
+      </div>
+
       <div class="Buttons-control">
         <button class="nav__item button__primary" @click="goBack">Go Back</button>
-        <button class="nav__item button__primary" @click="">Reserve Seats</button>
+        <button class="nav__item button__primary" @click="reserveSeats" :disabled="isReserving">
+          {{ isReserving ? 'Reserving...' : 'Reserve Seats' }}
+        </button>
       </div>
     </section>
   </div>
@@ -46,6 +53,9 @@ export default {
       restaurant: null,
       isLoading: true,
       foodImage: {}, // Object to store food names and their image URLs
+      isReserving: false,
+      message: '',
+      messageType: ''
     };
   },
   created() {
@@ -72,8 +82,45 @@ export default {
         this.isLoading = false;
       }
     },
-    
 
+    async reserveSeats() {
+      if (!this.restaurant) return;
+
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        this.$router.push('/login');
+        return;
+      }
+
+      this.isReserving = true;
+      const apiUrl = `http://localhost:8080/api/restaurants/save-table-reservation/${this.restaurant.id}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+          this.showMessage('Reservation requested successfully!', 'success');
+        } else {
+          console.error('API Error:', response.statusText);
+          this.showMessage('No available seats', 'error');
+        }
+      } catch (error) {
+        console.error('Error reserving seats:', error);
+        this.showMessage('Error reserving seats. Please try again later.', 'error');
+      } finally {
+        this.isReserving = false;
+      }
+    },
+
+    showMessage(text, type) {
+      this.message = text;
+      this.messageType = type;
+    },
 
     goBack() {
       this.$router.push("/");

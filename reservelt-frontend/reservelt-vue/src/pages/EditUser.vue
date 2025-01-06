@@ -2,6 +2,7 @@
   <div class="container mt-5">
     <div class="right-corner-btn">
       <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+      <button type="button" class="btn" @click="redirectToMyReservations">My Reservations</button>
     </div>
     <div id="userEditForm" class="alert alert-info mt-2">
       <h2 class="form-signin-heading">Edit User</h2>
@@ -322,6 +323,9 @@
       },
       redirectToRestaurants() {
         window.location.href = '/restaurants';
+      },
+      redirectToMyReservations() {
+        window.location.href = '/my-reservations';
       },
     },
     async mounted() {
