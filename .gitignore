@@ -34,3 +34,4 @@ application.properties
 .vscode/
 /temp/
 /cron.log
+.DS_Store
