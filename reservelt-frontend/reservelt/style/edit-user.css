@@ -71,6 +71,13 @@ th {
     border-radius: 5px;
 }
 
+.form-control-select {
+    width: 103%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 .btn {
     padding: 10px 20px;
     border: none;
