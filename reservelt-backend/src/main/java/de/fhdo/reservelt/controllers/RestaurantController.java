@@ -8,6 +8,8 @@ import de.fhdo.reservelt.services.RestaurantService;
 import de.fhdo.reservelt.services.RestaurantTableReservationService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,11 @@ public class RestaurantController {
     @GetMapping("/search")
     public String showSearchForm(Model model) {
         model.addAttribute("searchRequest", new SearchRequestDTO());
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser");
+        model.addAttribute("isAuthenticated", isAuthenticated);
+
         return "search";
     }
 

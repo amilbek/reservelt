@@ -29,13 +29,6 @@ body {
     border-radius: 4px;
     font-size: 14px;
 }
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-}
 .form-control:focus {
     border-color: #007bff;
     outline: none;
@@ -131,4 +124,12 @@ a:hover {
     top: 20px;
     right: 20px;
     z-index: 1000; /* Ensures it stays on top */
+}
+
+.form-control-select {
+    width: 525px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
 }

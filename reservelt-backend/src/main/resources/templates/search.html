@@ -10,8 +10,10 @@
 
 <div class="container">
     <div class="right-corner-btn">
-        <a href="/users" class="search-button">Profile</a>
+        <a th:if="${isAuthenticated}" href="/users" class="search-button">Profile</a>
+        <a th:if="${!isAuthenticated}" href="/login" class="search-button">Login</a>
     </div>
+
     <h1>Search for Restaurants</h1>
 
     <div th:if="${message}" th:classappend="${messageType == 'success' ? 'alert alert-success' : 'alert alert-danger'}" role="alert">
