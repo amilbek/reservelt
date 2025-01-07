@@ -2,67 +2,71 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile</title>
-  <link rel="stylesheet" href="/css/register.css">
+  <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
-<div class="container mt-5">
-  <div class="right-corner-btn">
-    <a href="/restaurants/search" class="btn btn-success mb-3">Search Restaurants</a>
-    <a href="/restaurants/my-reservations" class="btn btn-warning">My Reservations</a>
-  </div>
 
-  <h2 th:text="${greeting}"></h2>
-  <div th:each="u : ${user}" class="alert alert -info mt-2">
-    <div th:if="${session.errorMessage}">
-      <p th:text="${session.errorMessage}" style="color: red;"></p>
-    </div>
-    <table>
-      <tr>
-        <th>First Name</th>
-        <td><p th:text="${u.firstName}"></p></td>
-      </tr>
-      <tr>
-        <th>Last Name</th>
-        <td><p th:text="${u.lastName}"></p></td>
-      </tr>
-      <tr>
-        <th>Birth Date</th>
-        <td><p th:text="${u.birthDate}"></p></td>
-      </tr>
-      <tr>
-        <th>Email</th>
-        <td><p th:text="${u.email}"></p></td>
-      </tr>
-      <tr>
-        <th>Country</th>
-        <td><p th:text="${u.country.name}"></p></td>
-      </tr>
-      <tr>
-        <th>City</th>
-        <td><p th:text="${u.city.name}"></p></td>
-      </tr>
-    </table>
-    <form method="get" action="/auth/logout">
-      <button class="btn btn-danger" type="submit">Log out</button><br>
-    </form>
-    <button id="openDeleteModalBtn" class="btn btn-primary">Delete Account</button>
+<nav class="navbar">
+  <div class="logo">Reservelt</div>
+  <div class="nav-links">
+    <a href="/restaurants/search" class="btn btn-primary">Search Restaurants</a>
+    <a href="/restaurants/my-reservations" class="btn btn-warning">My Reservations</a>
     <a href="/users/edit" class="btn btn-warning">Edit Account</a>
     <a href="/users/change-password" class="btn btn-warning">Change Password</a>
+    <form method="get" action="/auth/logout" style="display: inline;">
+      <button type="submit" class="btn btn-danger">Log out</button>
+    </form>
+    <button id="openDeleteModalBtn" class="btn btn-primary">Delete Account</button>
   </div>
+</nav>
 
-  <div id="deleteAccountModal" class="modal">
-    <div class="modal-content">
-      <h4>Are you sure?</h4>
-      <p>Do you really want to delete your account? This action cannot be undone.</p>
-      <form th:action="@{/users/delete}" method="post">
-        <button type="submit" class="btn btn-danger">Yes, Delete</button>
-        <button type="button" id="cancelDeleteBtn" class="btn btn-secondary">Cancel</button>
-      </form>
+<div class="container">
+  <div class="user-data">
+    <h2 th:text="${greeting}"></h2>
+    <div th:each="u : ${user}">
+      <div th:if="${session.errorMessage}">
+        <p th:text="${session.errorMessage}" style="color: red;"></p>
+      </div>
+      <table>
+        <tr>
+          <th>First Name</th>
+          <td><p th:text="${u.firstName}"></p></td>
+        </tr>
+        <tr>
+          <th>Last Name</th>
+          <td><p th:text="${u.lastName}"></p></td>
+        </tr>
+        <tr>
+          <th>Birth Date</th>
+          <td><p th:text="${u.birthDate}"></p></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td><p th:text="${u.email}"></p></td>
+        </tr>
+        <tr>
+          <th>Country</th>
+          <td><p th:text="${u.country.name}"></p></td>
+        </tr>
+        <tr>
+          <th>City</th>
+          <td><p th:text="${u.city.name}"></p></td>
+        </tr>
+      </table>
     </div>
+  </div>
+</div>
+
+<div id="deleteAccountModal" class="modal">
+  <div class="modal-content">
+    <h4>Are you sure?</h4>
+    <p>Do you really want to delete your account? This action cannot be undone.</p>
+    <form th:action="@{/users/delete}" method="post">
+      <button type="submit" class="btn btn-danger">Yes, Delete</button>
+      <button type="button" id="cancelDeleteBtn" class="btn btn-secondary">Cancel</button>
+    </form>
   </div>
 </div>
 
@@ -83,19 +87,13 @@
 
     cancelDeleteBtn.addEventListener('click', closeModal);
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
       if (event.target === deleteAccountModal) {
         closeModal();
       }
     };
   });
-
-
-  if (sessionStorage.getItem('errorMessageDisplayed') !== 'true') {
-    sessionStorage.setItem('errorMessageDisplayed', 'true');
-  } else {
-    document.querySelector('div[th\\:if="${session.errorMessage}"]').style.display = 'none';
-  }
 </script>
+
 </body>
 </html>

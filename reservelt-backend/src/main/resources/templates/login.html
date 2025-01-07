@@ -21,8 +21,8 @@
     <div th:if="${session.errorMessage}">
       <p th:text="${session.errorMessage}" style="color: red;"></p>
     </div>
-    <span th:text="${success}"></span>
-    <span th:text="${failed}"></span>
+    <span th:text="${success}" style="color: green;"></span>
+    <span th:text="${failed}" style="color: red;"></span>
     <p>
       <label for="username" class="sr-only">Username</label>
       <input type="text" id="username" name="email" class="form-control" placeholder="Username" required autofocus>

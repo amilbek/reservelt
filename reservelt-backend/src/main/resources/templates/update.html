@@ -3,26 +3,35 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>User Edit</title>
-    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="/css/update.css">
 </head>
+
 <body>
-<div class="container mt-5">
-    <div class="right-corner-btn">
-        <a href="/restaurants/search" class="btn btn-success mb-3">Search Restaurants</a>
-        <a href="/restaurants/my-reservations" class="btn btn-warning">My Reservations</a>
+
+<nav class="navbar">
+    <div class="logo">Reservelt</div>
+    <div class="nav-links">
+        <a href="/restaurants/search" class="btn">Search Restaurants</a>
+        <a href="/restaurants/my-reservations" class="btn">My Reservations</a>
+        <a href="/users" class="btn">Profile</a>
+        <a href="/users/change-password" class="btn btn-warning">Change Password</a>
+        <a href="/auth/logout" class="btn">Log out</a>
     </div>
-    <div th:each="u : ${user}" class="alert alert -info mt-2">
+</nav>
+
+<div class="container">
+    <div th:each="u : ${user}">
         <form class="form-signin" method="post" action="/users/edit">
-            <h2 class="form-signin-heading">Edit</h2>
-            <span th:text="${failed}"></span>
+            <h2>Edit Profile</h2>
+            <span th:text="${failed}" style="color: red;"></span>
             <table>
                 <tr>
                     <th>
-                        <label for="firstname" class="sr-only">First Name</label>
+                        <label for="firstname">First Name</label>
                     </th>
                     <td>
                         <input type="text" id="firstname" name="firstName" th:value="${u.firstName}" class="form-control" placeholder="First Name" required autofocus>
@@ -30,25 +39,25 @@
                 </tr>
                 <tr>
                     <th>
-                        <label for="lastname" class="sr-only">Last Name</label>
+                        <label for="lastname">Last Name</label>
                     </th>
                     <td>
-                        <input type="text" id="lastname" name="lastName" th:value="${u.lastName}" class="form-control" placeholder="Last Name" required autofocus>
+                        <input type="text" id="lastname" name="lastName" th:value="${u.lastName}" class="form-control" placeholder="Last Name" required>
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <label for="birthDate">Birth Date</label>
                     </th>
-                    <th>
-                        <input type="date" id="birthDate" name="birthDate" th:value="${u.birthDate}" class="form-control" required/>
-                    </th>
+                    <td>
+                        <input type="date" id="birthDate" name="birthDate" th:value="${u.birthDate}" class="form-control" required />
+                    </td>
                 </tr>
                 <tr>
                     <th>
                         <label for="country">Country</label>
                     </th>
-                    <th>
+                    <td>
                         <select name="country" id="country" class="form-control">
                             <option th:each="country : ${countries}"
                                     th:value="${country.id}"
@@ -56,13 +65,13 @@
                                     th:selected="${country.id} == ${u.country.id}">
                             </option>
                         </select>
-                    </th>
+                    </td>
                 </tr>
                 <tr>
                     <th>
                         <label for="city">City</label>
                     </th>
-                    <th>
+                    <td>
                         <select name="city" id="city" class="form-control">
                             <option th:each="city : ${cities}"
                                     th:value="${city.id}"
@@ -70,10 +79,10 @@
                                     th:selected="${city.id} == ${u.city.id}">
                             </option>
                         </select>
-                    </th>
+                    </td>
                 </tr>
             </table>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Save Changes</button>
+            <button class="btn btn-primary" type="submit">Save Changes</button>
             <a href="/users" class="btn btn-warning">Cancel</a>
         </form>
     </div>
@@ -106,4 +115,6 @@
         }
     });
 </script>
+
 </body>
+</html>

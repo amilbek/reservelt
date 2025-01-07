@@ -111,7 +111,7 @@ public class DummyDataBootstrap implements ApplicationListener<ContextRefreshedE
         resTheStage.setPhoneNumber("+49 231 2222550");
         resTheStage.setRating("4.7");
         resTheStage.setTotalSeatCount(20);
-        resTheStage.setAvailableSeatCount(0);
+        resTheStage.setAvailableSeatCount(1);
 
         restaurantRepository.save(resTheStage);
 

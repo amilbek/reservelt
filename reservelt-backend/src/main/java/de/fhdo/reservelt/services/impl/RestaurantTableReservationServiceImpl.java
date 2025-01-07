@@ -38,8 +38,7 @@ public class RestaurantTableReservationServiceImpl implements RestaurantTableRes
         if (restaurant.getAvailableSeatCount() < 1) {
             throw new IllegalArgumentException("No available seat in " + restaurant.getName());
         }
-        restaurant.setTotalSeatCount(restaurant.getTotalSeatCount() - 1);
-        restaurant.setAvailableSeatCount(restaurant.getAvailableSeatCount() + 1);
+        restaurant.setAvailableSeatCount(restaurant.getAvailableSeatCount() - 1);
         restaurantRepository.save(restaurant);
         RestaurantTableReservation restaurantTableReservation = new RestaurantTableReservation();
         restaurantTableReservation.setUser(user);
@@ -55,8 +54,9 @@ public class RestaurantTableReservationServiceImpl implements RestaurantTableRes
         restaurantTableReservation.setStatus(status);
         restaurantTableReservationRepository.save(restaurantTableReservation);
         Restaurant restaurant = restaurantTableReservation.getRestaurant();
-        restaurant.setTotalSeatCount(restaurant.getTotalSeatCount() + 1);
-        restaurant.setAvailableSeatCount(restaurant.getAvailableSeatCount() - 1);
+        if (!status.equals(RestaurantTableReservationEnums.IN_PROCESS)) {
+            restaurant.setAvailableSeatCount(restaurant.getAvailableSeatCount() + 1);
+        }
         restaurantRepository.save(restaurant);
     }
 

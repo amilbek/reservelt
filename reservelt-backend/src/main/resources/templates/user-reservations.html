@@ -2,16 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Your Table Reservations</title>
-  <link rel="stylesheet" href="/css/register.css">
+  <link rel="stylesheet" href="/css/user-reservations.css">
 </head>
+
 <body>
 
-<div class="container">
-  <div class="right-corner-btn">
-    <a href="/restaurants/search" class="btn btn-success mb-3">Search Restaurants</a>
-    <a href="/users" class="btn btn-success mb-3">Profile</a>
+<nav class="navbar">
+  <div class="logo">My Reservations</div>
+  <div class="nav-links">
+    <a href="/restaurants/search">Search Restaurants</a>
+    <a href="/users">Profile</a>
+    <a href="/auth/logout">Log out</a>
   </div>
+</nav>
+
+<div class="container">
   <h1>Your Table Reservations</h1>
 
   <div th:if="${#lists.isEmpty(reservations)}">
@@ -19,7 +26,7 @@
   </div>
 
   <div th:unless="${#lists.isEmpty(reservations)}">
-    <table class="table table-bordered">
+    <table>
       <thead>
       <tr>
         <th>#</th>
@@ -42,15 +49,15 @@
 
         <td>
           <div th:if="${reservation.tableReservationStatus == 'RESERVED'}">
-            <form th:action="@{/restaurants/change-status}" method="post">
+            <form th:action="@{/restaurants/change-status}" method="post" style="display: inline-block;">
               <input type="hidden" name="reservationId" th:value="${reservation.id}" />
               <input type="hidden" name="newStatus" value="IN_PROCESS" />
-              <button type="submit" class="btn btn-primary btn-sm">Mark as In Process</button>
+              <button type="submit" class="btn btn-primary">Mark as In Process</button>
             </form>
             <form th:action="@{/restaurants/change-status}" method="post" style="display: inline-block;">
               <input type="hidden" name="reservationId" th:value="${reservation.id}" />
               <input type="hidden" name="newStatus" value="CANCELLED" />
-              <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+              <button type="submit" class="btn btn-danger">Cancel</button>
             </form>
           </div>
 
@@ -58,13 +65,14 @@
             <form th:action="@{/restaurants/change-status}" method="post">
               <input type="hidden" name="reservationId" th:value="${reservation.id}" />
               <input type="hidden" name="newStatus" value="COMPLETED" />
-              <button type="submit" class="btn btn-success btn-sm">Mark as Completed</button>
+              <button type="submit" class="btn btn-success">Mark as Completed</button>
             </form>
           </div>
 
           <div th:if="${reservation.tableReservationStatus == 'COMPLETED'}">
             <span class="text-success">No further actions</span>
           </div>
+
           <div th:if="${reservation.tableReservationStatus == 'CANCELLED'}">
             <span class="text-muted">No further actions</span>
           </div>

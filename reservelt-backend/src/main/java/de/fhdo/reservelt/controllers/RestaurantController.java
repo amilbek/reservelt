@@ -45,6 +45,11 @@ public class RestaurantController {
     public String searchRestaurants(SearchRequestDTO searchRequest, Model model) {
         List<RestaurantDTO> restaurants = restaurantService.searchRestaurants(searchRequest.getName());
         model.addAttribute("restaurants", restaurants);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser");
+        model.addAttribute("isAuthenticated", isAuthenticated);
+
         return "search";
     }
 
@@ -64,6 +69,11 @@ public class RestaurantController {
             model.addAttribute("message", "An unexpected error occurred. Please try again later.");
             model.addAttribute("messageType", "error");
         }
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser");
+        model.addAttribute("isAuthenticated", isAuthenticated);
+
         return "search";
     }
 

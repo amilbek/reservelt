@@ -11,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -60,7 +62,13 @@ public class UserController {
     @PostMapping("/edit")
     public String editUser(@Valid @ModelAttribute UserEditDto userEditDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("failed", "Validation errors occurred. Please correct the form and try again.");
+            List<String> errorMessages = new ArrayList<>();
+
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+
+            model.addAttribute("failed", errorMessages.get(0));
             List<CountryDto> countries = countryService.getAllCountries();
             model.addAttribute("countries", countries);
             UserDto user = userService.getProfile();
@@ -97,7 +105,13 @@ public class UserController {
     @PostMapping("/change-password")
     public String changePassword(@Valid @ModelAttribute ChangeUserPasswordDto changeUserPasswordDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("failed", "Validation errors occurred. Please correct the form and try again.");
+            List<String> errorMessages = new ArrayList<>();
+
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+
+            model.addAttribute("failed", errorMessages.get(0));
             return "change-password";
         }
 
