@@ -40,6 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    document.getElementById("logoutButton").addEventListener("click", () => {
+        localStorage.removeItem("authToken");
+        localStorage.setItem("successMessage", "You have been logged out successfully!");
+        window.location.href = "login.html";
+    });
+
     async function changePasswordGraphQL(data, token) {
         const response = await fetch(`${BASE_URL}/graphql`, {
             method: 'POST',
@@ -100,6 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const errorSpan = document.createElement('span');
         errorSpan.className = 'field-error';
         errorSpan.style.color = 'red';
+        errorSpan.style.fontSize = '12px';
+        errorSpan.style.marginTop = '5px';
+        errorSpan.style.display = 'block';
         errorSpan.textContent = message;
         field.parentElement.appendChild(errorSpan);
     }

@@ -113,6 +113,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             errorMessage.style.display = 'block';
         }        
     });
+
+    document.getElementById("logoutButton").addEventListener("click", () => {
+        localStorage.removeItem("authToken");
+        localStorage.setItem("successMessage", "You have been logged out successfully!");
+        window.location.href = "login.html";
+    });
 });
 
 function isGraphQL() {
@@ -254,6 +260,9 @@ function displayFieldError(fieldId, message) {
     const errorSpan = document.createElement('span');
     errorSpan.className = 'field-error';
     errorSpan.style.color = 'red';
+    errorSpan.style.fontSize = '12px';
+    errorSpan.style.marginTop = '5px';
+    errorSpan.style.display = 'block';
     errorSpan.textContent = message;
     field.parentElement.appendChild(errorSpan);
 }

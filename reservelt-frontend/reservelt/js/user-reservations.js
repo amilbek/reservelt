@@ -88,3 +88,9 @@ async function changeStatus(event, reservationId, newStatus) {
     }
 }
 fetchReservations();
+
+document.getElementById("logoutButton").addEventListener("click", () => {
+    localStorage.removeItem("authToken");
+    localStorage.setItem("successMessage", "You have been logged out successfully!");
+    window.location.href = "login.html";
+});

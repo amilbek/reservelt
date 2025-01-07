@@ -398,6 +398,7 @@
     display: block;
     color: red;
     text-align: center;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    font-size: 12px;
   }
 </style>

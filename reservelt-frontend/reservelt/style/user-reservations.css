@@ -95,3 +95,9 @@ th {
 .btn-success:hover {
     opacity: 0.8;
 }
+
+h1 {
+    text-align: center;
+    color: #42b883;
+    margin-bottom: 30px;
+}

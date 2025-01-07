@@ -137,6 +137,9 @@ function displayFieldError(fieldId, message) {
     const errorSpan = document.createElement('span');
     errorSpan.className = 'field-error';
     errorSpan.style.color = 'red';
+    errorSpan.style.fontSize = '12px';
+    errorSpan.style.marginTop = '5px';
+    errorSpan.style.display = 'block';
     errorSpan.textContent = message;
     field.parentElement.appendChild(errorSpan);
 }
