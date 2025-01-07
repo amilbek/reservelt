@@ -1,9 +1,19 @@
 <template>
   <div class="container">
     <div class="right-corner-btn">
-      <button type="button" class="btn" @click="redirectToProfile">Profile</button>
-      <button type="button" class="btn" @click="redirectToLogin">Login</button>
+      <button
+        v-if="isAuthorized"
+        type="button"
+        class="btn"
+        @click="redirectToProfile"
+      >
+        Profile
+      </button>
+      <button v-else type="button" class="btn" @click="redirectToLogin">
+        Login
+      </button>
     </div>
+
     <h1>Search for Restaurants</h1>
 
     <!-- Search Form -->
@@ -34,10 +44,12 @@
           <p>Phone: {{ restaurant.phoneNumber }}</p>
           <p>Address: {{ restaurant.address }}</p>
           <p>Rating: {{ restaurant.rating }}</p>
-          <button @click="navigateToRestaurantDetails(restaurant.name)" class="more-button">
+          <button
+            @click="navigateToRestaurantDetails(restaurant.name)"
+            class="more-button"
+          >
             More
           </button>
-
 
           <h3>Foods:</h3>
           <div v-if="restaurant.foods && restaurant.foods.length > 0">
@@ -59,8 +71,6 @@
                 </tr>
               </tbody>
             </table>
-
-            
           </div>
           <p v-else>No foods available for this restaurant.</p>
         </li>
@@ -69,7 +79,6 @@
   </div>
 </template>
 
-
 <script>
   export default {
     data() {
@@ -77,6 +86,7 @@
         searchQuery: '',
         restaurants: [],
         isLoading: false,
+        isAuthorized: false,
       };
     },
     methods: {
@@ -93,7 +103,9 @@
             this.restaurants = Array.isArray(data)
               ? data.map((restaurant) => ({
                   ...restaurant,
-                  foods: Array.isArray(restaurant.foods) ? restaurant.foods : [],
+                  foods: Array.isArray(restaurant.foods)
+                    ? restaurant.foods
+                    : [],
                 }))
               : [];
           } else {
@@ -116,6 +128,10 @@
         const baseUrl = `${window.location.origin}/restaurant/${encodedName}`;
         window.location.href = baseUrl;
       },
+      checkAuthStatus() {
+        const token = localStorage.getItem('authToken');
+        this.isAuthorized = !!token;
+      },
       redirectToProfile() {
         window.location.href = '/profile';
       },
@@ -123,9 +139,11 @@
         window.location.href = '/login';
       },
     },
+    mounted() {
+      this.checkAuthStatus();
+    },
   };
 </script>
-
 
 <style scoped>
   body {
@@ -136,7 +154,7 @@
   }
 
   .container {
-    width: 80%;
+    width: 35%;
     margin: 0 auto;
     padding: 20px;
   }
@@ -230,5 +248,19 @@
     text-align: left;
     font-size: 18px;
     color: #888;
+  }
+
+  .right-corner-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: #42b883;
   }
 </style>

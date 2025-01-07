@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="right-corner-btn">
-      <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
+      <button type="button" class="btn" @click="redirectToRestaurants">
+        Go to Restaurants
+      </button>
     </div>
     <h2 class="form-signin-heading">Login</h2>
     <span v-if="successMessage" style="color: green">{{ successMessage }}</span>
@@ -135,3 +137,96 @@
     },
   };
 </script>
+
+<style scoped>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+    padding: 50px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    padding: 100px 30px;
+    width: 100%;
+  }
+
+  .form-signin-heading {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #42b883;
+  }
+  .form-signin p {
+    text-align: center;
+    color: #42b883;
+    margin-bottom: 30px;
+  }
+  .form-control {
+    width: 450px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .form-control-select {
+    width: 475px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .form-control:focus {
+    border-color: #42b883;
+    outline: none;
+  }
+  select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+  }
+  .btn-container {
+    text-align: center;
+  }
+  .btn {
+    margin: 25px 0;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #42b883;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #42b883;
+  }
+  .btn:focus {
+    outline: none;
+  }
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .bottom_btns {
+    margin-right: 300px;
+  }
+  .right-corner-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+</style>

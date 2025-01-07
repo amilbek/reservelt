@@ -1,116 +1,128 @@
 <template>
-  <div class="container mt-5">
-    <div class="right-corner-btn">
-      <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
-      <button type="button" class="btn" @click="redirectToMyReservations">My Reservations</button>
-    </div>
-    <div id="userEditForm" class="alert alert-info mt-2">
-      <h2 class="form-signin-heading">Edit User</h2>
-      <div v-if="successMessage" style="color: green">{{ successMessage }}</div>
-      <div v-if="errors.errorMessage" class="text-success" style="color: red">
-        {{ errors.errorMessage }}
+  <div>
+    <nav class="navbar">
+      <div class="logo">Reservelt</div>
+      <div class="nav-links">
+        <button @click="redirectToRestaurants">Go to Restaurants</button>
+        <button @click="redirectToMyReservations">My Reservations</button>
+        <router-link to="/profile">Profile</router-link>
+        <router-link to="/change-password">Change Password</router-link>
+        <button @click="logout">Logout</button>
       </div>
-      <form
-        id="editUserForm"
-        class="form-signin"
-        @submit.prevent="handleSubmit"
-      >
-        <table>
-          <tbody>
-            <tr>
-              <th><label for="firstName">First Name</label></th>
-              <td>
-                <input
-                  type="text"
-                  id="firstName"
-                  v-model="form.firstName"
-                  class="form-control"
-                  placeholder="First Name"
-                  required
-                />
-              </td>
-            </tr>
-            <tr>
-              <th><label for="lastName">Last Name</label></th>
-              <td>
-                <input
-                  type="text"
-                  id="lastName"
-                  v-model="form.lastName"
-                  class="form-control"
-                  placeholder="Last Name"
-                  required
-                />
-              </td>
-            </tr>
-            <tr>
-              <th><label for="birthDate">Birth Date</label></th>
-              <td>
-                <input
-                  type="date"
-                  id="birthDate"
-                  v-model="form.birthDate"
-                  class="form-control"
-                  required
-                />
-                <span
-                  v-if="errors.birthDate"
-                  class="text-danger"
-                  style="color: red"
-                  >{{ errors.birthDate }}</span
-                >
-              </td>
-            </tr>
-            <tr>
-              <th><label for="country">Country</label></th>
-              <td>
-                <select
-                  id="country"
-                  v-model="form.country"
-                  @change="fetchCities(form.country)"
-                  class="form-control-select"
-                >
-                  <option value="">Choose Country</option>
-                  <option
-                    v-for="country in countries"
-                    :key="country.id"
-                    :value="country.id"
-                  >
-                    {{ country.name }}
-                  </option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <th><label for="city">City</label></th>
-              <td>
-                <select
-                  id="city"
-                  v-model="form.city"
-                  class="form-control-select"
-                >
-                  <option value="">Choose City</option>
-                  <option
-                    v-for="city in cities"
-                    :key="city.id"
-                    :value="city.id"
-                  >
-                    {{ city.name }}
-                  </option>
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <button
-          id="submitEditButton"
-          class="btn btn-lg btn-primary btn-block"
-          type="submit"
+    </nav>
+
+    <div class="container">
+      <div id="userEditForm" class="alert alert-info mt-2">
+        <h2 class="form-signin-heading">Edit User</h2>
+        <div v-if="successMessage" style="color: green">
+          {{ successMessage }}
+        </div>
+        <div v-if="errors.errorMessage" class="text-success" style="color: red">
+          {{ errors.errorMessage }}
+        </div>
+        <form
+          id="editUserForm"
+          class="form-signin"
+          @submit.prevent="handleSubmit"
         >
-          Save Changes
-        </button>
-        <router-link to="/profile" class="btn btn-warning">Cancel</router-link>
-      </form>
+          <table>
+            <tbody>
+              <tr>
+                <th><label for="firstName">First Name</label></th>
+                <td>
+                  <input
+                    type="text"
+                    id="firstName"
+                    v-model="form.firstName"
+                    class="form-control"
+                    placeholder="First Name"
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th><label for="lastName">Last Name</label></th>
+                <td>
+                  <input
+                    type="text"
+                    id="lastName"
+                    v-model="form.lastName"
+                    class="form-control"
+                    placeholder="Last Name"
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th><label for="birthDate">Birth Date</label></th>
+                <td>
+                  <input
+                    type="date"
+                    id="birthDate"
+                    v-model="form.birthDate"
+                    class="form-control"
+                    required
+                  />
+                  <span v-if="errors.birthDate" class="error-message">{{
+                    errors.birthDate
+                  }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th><label for="country">Country</label></th>
+                <td>
+                  <select
+                    id="country"
+                    v-model="form.country"
+                    @change="fetchCities(form.country)"
+                    class="form-control-select"
+                  >
+                    <option value="">Choose Country</option>
+                    <option
+                      v-for="country in countries"
+                      :key="country.id"
+                      :value="country.id"
+                    >
+                      {{ country.name }}
+                    </option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th><label for="city">City</label></th>
+                <td>
+                  <select
+                    id="city"
+                    v-model="form.city"
+                    class="form-control-select"
+                  >
+                    <option value="">Choose City</option>
+                    <option
+                      v-for="city in cities"
+                      :key="city.id"
+                      :value="city.id"
+                    >
+                      {{ city.name }}
+                    </option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="btn-container">
+            <button
+              id="submitEditButton"
+              class="btn btn-lg btn-primary"
+              type="submit"
+            >
+              Save Changes
+            </button>
+            <router-link to="/profile" class="btn btn-warning"
+              >Cancel</router-link
+            >
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -321,11 +333,22 @@
       isGraphQL() {
         return window.location.href.includes('graphql');
       },
+      redirectToLogin() {
+        this.$router.push('/login');
+      },
       redirectToRestaurants() {
         window.location.href = '/restaurants';
       },
       redirectToMyReservations() {
         window.location.href = '/my-reservations';
+      },
+      logout() {
+        localStorage.removeItem('authToken');
+        localStorage.setItem(
+          'successMessage',
+          'You have been logged out successfully!'
+        );
+        this.redirectToLogin();
       },
     },
     async mounted() {
@@ -333,3 +356,138 @@
     },
   };
 </script>
+
+<style scoped>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+    padding: 50px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+  }
+
+  .navbar .nav-links {
+    display: flex;
+    gap: 15px;
+  }
+
+  .navbar button,
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #555;
+    border: none;
+    cursor: pointer;
+  }
+
+  .navbar button:hover,
+  .navbar a:hover {
+    background-color: #777;
+  }
+  .container {
+    padding: 40px 30px;
+    max-width: 800px;
+    width: 100%;
+    margin: 50px auto;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .form-signin-heading {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #42b883;
+  }
+  .form-signin p {
+    text-align: center;
+    color: #42b883;
+    margin-bottom: 30px;
+  }
+  .form-control {
+    width: 450px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .form-control-select {
+    width: 475px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .form-control:focus {
+    border-color: #42b883;
+    outline: none;
+  }
+  select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+  }
+  .btn {
+    margin: 25px 0;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #42b883;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #42b883;
+  }
+  .btn:focus {
+    outline: none;
+  }
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .btn-container {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .error-message {
+    display: block;
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+</style>

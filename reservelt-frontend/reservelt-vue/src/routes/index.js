@@ -6,7 +6,7 @@ import EditUser from '../pages/EditUser.vue';
 import ChangePassword from '../pages/ChangePassword.vue';
 import RestaurantSearch from '../pages/RestaurantSearch.vue';
 import RestaurantDetails from '../pages/RestaurantDetails.vue';
-import ReservationPage from "../components/ReservationPage.vue";
+import ReservationPage from '../components/ReservationPage.vue';
 
 const routes = [
   {
@@ -47,7 +47,7 @@ const routes = [
   { path: '/restaurants', name: 'Restaurants', component: RestaurantSearch },
   {
     path: '/',
-    redirect: '/restaurants'
+    redirect: '/restaurants',
   },
 ];
 
@@ -59,8 +59,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('authToken');
   if (!token) {
-    if (to.path !== '/restaurants' && to.path !== '/login' && to.path !== '/register' && !to.path.startsWith('/restaurant/')  ) {
-      console.log('Returning')
+    if (
+      to.path !== '/restaurants' &&
+      to.path !== '/login' &&
+      to.path !== '/register' &&
+      !to.path.startsWith('/restaurant/')
+    ) {
+      console.log('Returning');
       return next('/restaurants');
     }
   }

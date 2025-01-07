@@ -1,67 +1,79 @@
 <template>
-  <div class="container">
-    <div class="right-corner-btn">
-      <button type="button" class="btn" @click="redirectToRestaurants">Go to Restaurants</button>
-      <button type="button" class="btn" @click="redirectToMyReservations">My Reservations</button>
-    </div>
-    <form @submit.prevent="handleChangePassword" class="form-signin">
-      <h2 class="form-signin-heading">Change Password</h2>
-      <div v-if="successMessage" class="text-success" style="color: green">
-        {{ successMessage }}
+  <div>
+    <nav class="navbar">
+      <div class="logo">Reservelt</div>
+      <div class="nav-links">
+        <button @click="redirectToRestaurants">Go to Restaurants</button>
+        <button @click="redirectToMyReservations">My Reservations</button>
+        <router-link to="/profile">Profile</router-link>
+        <router-link to="/edit-user">Edit User</router-link>
+        <button @click="logout">Logout</button>
       </div>
-      <div v-if="errors.errorMessage" class="text-success" style="color: red">
-        {{ errors.errorMessage }}
-      </div>
+    </nav>
+    <div class="container">
+      <form @submit.prevent="handleChangePassword" class="form-signin">
+        <h2 class="form-signin-heading">Change Password</h2>
+        <div v-if="successMessage" class="text-success" style="color: green">
+          {{ successMessage }}
+        </div>
+        <div v-if="errors.errorMessage" class="text-success" style="color: red">
+          {{ errors.errorMessage }}
+        </div>
 
-      <p>
-        <label for="current_password" class="sr-only">Current Password</label>
-        <input
-          type="password"
-          id="current_password"
-          v-model="form.currentPassword"
-          class="form-control"
-          placeholder="Current Password"
-          required
-        />
-        <span v-if="errors.currentPassword" style="color: red">{{
-          errors.currentPassword
-        }}</span>
-      </p>
-      <p>
-        <label for="new_password" class="sr-only">New Password</label>
-        <input
-          type="password"
-          id="new_password"
-          v-model="form.newPassword"
-          class="form-control"
-          placeholder="New Password"
-          required
-        />
-        <span v-if="errors.newPassword" style="color: red">{{
-          errors.newPassword
-        }}</span>
-      </p>
-      <p>
-        <label for="new_password_confirmation" class="sr-only"
-          >New Password Confirmation</label
-        >
-        <input
-          type="password"
-          id="new_password_confirmation"
-          v-model="form.newPasswordConfirmation"
-          class="form-control"
-          placeholder="New Password Confirmation"
-          required
-        />
-        <span v-if="errors.newPasswordConfirmation" style="color: red">{{
-          errors.newPasswordConfirmation
-        }}</span>
-      </p>
-      <button type="submit" class="btn btn-lg btn-primary btn-block">
-        Change
-      </button>
-      <router-link to="/profile" class="btn btn-warning">Cancel</router-link>
-    </form>
+        <p>
+          <label for="current_password" class="sr-only">Current Password</label>
+          <input
+            type="password"
+            id="current_password"
+            v-model="form.currentPassword"
+            class="form-control"
+            placeholder="Current Password"
+            required
+          />
+          <span v-if="errors.currentPassword" class="error-message">{{
+            errors.currentPassword
+          }}</span>
+        </p>
+        <p>
+          <label for="new_password" class="sr-only">New Password</label>
+          <input
+            type="password"
+            id="new_password"
+            v-model="form.newPassword"
+            class="form-control"
+            placeholder="New Password"
+            required
+          />
+          <span v-if="errors.newPassword" class="error-message">{{
+            errors.newPassword
+          }}</span>
+        </p>
+        <p>
+          <label for="new_password_confirmation" class="sr-only"
+            >New Password Confirmation</label
+          >
+          <input
+            type="password"
+            id="new_password_confirmation"
+            v-model="form.newPasswordConfirmation"
+            class="form-control"
+            placeholder="New Password Confirmation"
+            required
+          />
+          <span v-if="errors.newPasswordConfirmation" class="error-message">{{
+            errors.newPasswordConfirmation
+          }}</span>
+        </p>
+        <div class="btn-container">
+          <button type="submit" class="btn btn-lg btn-primary btn-block">
+            Save Changes
+          </button>
+          <router-link to="/profile" class="btn btn-warning"
+            >Cancel</router-link
+          >
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -189,11 +201,22 @@
             error.message || 'An error occurred while changing the password.';
         }
       },
+      redirectToLogin() {
+        this.$router.push('/login');
+      },
       redirectToRestaurants() {
         window.location.href = '/restaurants';
       },
       redirectToMyReservations() {
         window.location.href = '/my-reservations';
+      },
+      logout() {
+        localStorage.removeItem('authToken');
+        localStorage.setItem(
+          'successMessage',
+          'You have been logged out successfully!'
+        );
+        this.redirectToLogin();
       },
     },
     mounted() {
@@ -205,3 +228,138 @@
     },
   };
 </script>
+
+<style scoped>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+    padding: 50px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+  }
+
+  .navbar .nav-links {
+    display: flex;
+    gap: 15px;
+  }
+
+  .navbar button,
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #555;
+    border: none;
+    cursor: pointer;
+  }
+
+  .navbar button:hover,
+  .navbar a:hover {
+    background-color: #777;
+  }
+  .container {
+    padding: 40px 30px;
+    max-width: 800px;
+    width: 100%;
+    margin: 50px auto;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .form-signin-heading {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #42b883;
+  }
+  .form-signin p {
+    text-align: center;
+    color: #42b883;
+    margin-bottom: 30px;
+  }
+  .form-control {
+    width: 450px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .form-control-select {
+    width: 475px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .form-control:focus {
+    border-color: #42b883;
+    outline: none;
+  }
+  select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+  }
+  .btn {
+    margin: 25px 0;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #42b883;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #42b883;
+  }
+  .btn:focus {
+    outline: none;
+  }
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .btn-container {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .error-message {
+    display: block;
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+</style>
