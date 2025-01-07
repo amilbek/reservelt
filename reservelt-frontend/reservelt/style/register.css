@@ -131,3 +131,11 @@ a:hover {
 .btn-danger:hover, .btn-secondary:hover {
     opacity: 0.8;
 }
+
+.form-control-select {
+    width: 105%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}

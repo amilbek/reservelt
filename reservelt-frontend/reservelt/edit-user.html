@@ -3,72 +3,61 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User Edit</title>
-    <link rel="stylesheet" href="style/register.css">
+    <link rel="stylesheet" href="style/edit-user.css">
 </head>
+
 <body>
-<div class="container mt-5">
-    <div class="right-corner-btn">
-        <a href="user-reservations.html" class="btn btn-warning">My Reservations</a>
+
+<nav class="navbar">
+    <div class="logo">Edit User</div>
+    <div class="nav-links">
+        <a href="profile.html">Profile</a>
+        <a href="user-reservations.html">My Reservations</a>
+        <a href="change-password.html">Change Password</a>
+        <a href="logout.html">Log out</a>
     </div>
-    <div id="userEditForm" class="alert alert-info mt-2">
-        <h2 class="form-signin-heading">Edit User</h2>
-        <div id="successMessage" style="color: green; display: none;"></div>
-        <div id="errorMessage" style="color: red; display: none;"></div>
-        <form id="editUserForm" class="form-signin">
-            <table>
-                <tr>
-                    <th>
-                        <label for="firstname" class="sr-only">First Name</label>
-                    </th>
-                    <td>
-                        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" required autofocus>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="lastname" class="sr-only">Last Name</label>
-                    </th>
-                    <td>
-                        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" required>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="birthDate">Birth Date</label>
-                    </th>
-                    <th>
-                        <input type="date" id="birthDate" name="birthDate" class="form-control" required/>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="country">Country</label>
-                    </th>
-                    <th>
-                        <select name="country" id="country" class="form-control"></select>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <label for="city">City</label>
-                    </th>
-                    <th>
-                        <select name="city" id="city" class="form-control"></select>
-                    </th>
-                </tr>
-            </table>
-            <button id="submitEditButton" class="btn btn-lg btn-primary btn-block" type="submit">Save Changes</button>
-            <a href="profile.html" class="btn btn-warning">Cancel</a>
-        </form>
-        <!-- <button id="toggleGraphqlButton" class="btn btn-primary">Toggle graphql</button> -->
-    </div>
+</nav>
+
+<div class="container">
+    <h2>Edit User</h2>
+    <div id="successMessage" style="display: none;">User details updated successfully.</div>
+    <div id="errorMessage" style="display: none;">Error updating user details.</div>
+    <form id="editUserForm" class="form-signin">
+        <table>
+            <tr>
+                <th><label for="firstname">First Name</label></th>
+                <td><input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" required autofocus></td>
+            </tr>
+            <tr>
+                <th><label for="lastname">Last Name</label></th>
+                <td><input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" required></td>
+            </tr>
+            <tr>
+                <th><label for="birthDate">Birth Date</label></th>
+                <td><input type="date" id="birthDate" name="birthDate" class="form-control" required></td>
+            </tr>
+            <tr>
+                <th><label for="country">Country</label></th>
+                <td>
+                    <select name="country" id="country" class="form-control">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="city">City</label></th>
+                <td>
+                    <select name="city" id="city" class="form-control">
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button id="submitEditButton" class="btn btn-primary" type="submit">Save Changes</button>
+        <a href="profile.html" class="btn btn-warning">Cancel</a>
+    </form>
 </div>
 
 <script src="js/edit-user.js"></script>
-<script src="js/graphql-toggle.js"></script>
 </body>
 </html>

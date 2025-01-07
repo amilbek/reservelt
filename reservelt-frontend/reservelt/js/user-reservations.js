@@ -12,12 +12,11 @@ async function fetchReservations() {
 
         document.getElementById('reservations-table').style.display = 'block';
         const tbody = document.getElementById('reservations-body');
-        tbody.innerHTML = ''; // Clear existing rows
+        tbody.innerHTML = '';
 
         reservations.forEach((reservation, index) => {
             const row = document.createElement('tr');
 
-            // Row cells
             row.innerHTML = `
           <td>${index + 1}</td>
           <td>${reservation.restaurantName}</td>
@@ -29,7 +28,6 @@ async function fetchReservations() {
         });
     } catch (error) {
         console.error('Error fetching reservations:', error);
-        alert('Failed to load reservations. Please try again later.');
     }
 }
 
@@ -84,11 +82,9 @@ async function changeStatus(event, reservationId, newStatus) {
 
         if (!response.ok) throw new Error('Failed to change status');
 
-        alert('Reservation status updated successfully!');
         fetchReservations(); // Reload reservations
     } catch (error) {
         console.error('Error changing status:', error);
-        alert('Failed to update reservation status. Please try again later.');
     }
 }
 fetchReservations();

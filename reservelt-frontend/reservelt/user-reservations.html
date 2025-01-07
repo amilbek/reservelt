@@ -4,15 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Table Reservations</title>
-  <link rel="stylesheet" href="style/register.css" />
+  <link rel="stylesheet" href="style/user-reservations.css" />
 </head>
 <body>
 
-<div class="container">
-  <div class="right-corner-btn">
-    <a href="profile.html" class="btn btn-success mb-3">Profile</a>
+<nav class="navbar">
+  <div class="logo">User Reservations</div>
+  <div class="nav-links">
+    <a href="profile.html">Profile</a>
+    <a href="edit-user.html">Edit Account</a>
+    <a href="change-password.html">Change Password</a>
+    <button id="logoutButton" class="btn btn-danger">Log out</button>
   </div>
+</nav>
 
+<div class="container">
   <h1>Your Table Reservations</h1>
 
   <div id="no-reservations" class="no-reservations" style="display: none;">
@@ -20,7 +26,7 @@
   </div>
 
   <div id="reservations-table" style="display: none;">
-    <table class="table table-bordered">
+    <table>
       <thead>
       <tr>
         <th>#</th>
@@ -35,6 +41,6 @@
   </div>
 </div>
 
-<script src="js/user-reservations.js"/>
+<script src="js/user-reservations.js"></script>
 </body>
 </html>
