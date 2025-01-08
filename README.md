@@ -415,7 +415,7 @@ API - /graphql
 Request
 ```bash
 mutation RegisterUser {
-  registerUser(input: {
+  register_user(userRegisterDto: {
     firstName: "Thomas"
     lastName: "Shelby"
     birthDate: "1972-12-12"
@@ -428,6 +428,7 @@ mutation RegisterUser {
     id
   }
 }
+
 ```
 
 #### User Login (GraphQL)
@@ -435,11 +436,18 @@ mutation RegisterUser {
 Request
 ```bash
 mutation LoginUser {
-  loginUser(input: {
+  login_user(userLoginDto: {
     email: "email@mail.de"
     password: "Qwerty123!"
-  }) {
-    token
+  })
+}
+```
+
+Response
+```bash
+{
+  "data": {
+    "login_user": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjM1MDY0MSwiZXhwIjoxNzM2Mzg2NjQxfQ.UKwXq63kxhTfV6jzmR9s46Y45fyJp21XMLZAiEriBdTliJk5YfsdV54J9fRdV3ePwi-3o9tNBGuNH8JqTNxm2w"
   }
 }
 ```
@@ -472,6 +480,27 @@ query {
     }
 ```
 
+Response
+```bash
+{
+  "data": {
+    "user": {
+      "id": "0b5ae614-7ca5-4ea5-a187-3902ce0b49a8",
+      "firstName": "John",
+      "lastName": "Doe",
+      "birthDate": "1999-12-31",
+      "email": "email@mail.com",
+      "country": {
+        "name": "Germany"
+      },
+      "city": {
+        "name": "Dortmund"
+      }
+    }
+  }
+}
+```
+
 #### Edit User Data (GraphQL)
 
 Header
@@ -484,10 +513,10 @@ Header
 Request 
 ```bash
 mutation UserEditDto {
-  edit_user(input: {
+  edit_user(userEditDto: {
     firstName: "Thomas"
     lastName: "Shelby"
-    birthDate: "1972-12-12"
+    birthDate: "1974-12-12"
     country: 1
     city: 1
   }) {
@@ -508,12 +537,19 @@ Header
 Request 
 ```bash
 mutation ChangeUserPasswordDto {
-  edit_user(input: {
+  change_password(changeUserPasswordDto: {
     currentPassword: "Qwerty123!"
     newPassword: "Qwerty123!"
     newPasswordConfirmation: "Qwerty123!"
-  }) {
-    string
+  })
+}
+```
+
+Response
+```bash
+{
+  "data": {
+    "change_password": "Password changed successfully"
   }
 }
 ```
@@ -531,5 +567,14 @@ Request
 ```bash
 mutation {
     delete_user
+}
+```
+
+Response
+```bash
+{
+  "data": {
+    "delete_user": "User deleted successfully"
+  }
 }
 ```
