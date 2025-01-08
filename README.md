@@ -97,6 +97,7 @@ Frontend (with Vue.js) is avaialble on http://localhost:3000/
 ### REST API
 
 #### User Registration 
+
 API
 ```bash
 /api/auth/register
@@ -116,7 +117,7 @@ Request Body
 }
 ```
 
-#### login
+#### User Login
 
 API
 ```bash
@@ -160,6 +161,7 @@ Request Body
 ```
 
 #### Get User Profile
+
 API
 ```bash
 /api/users
@@ -194,6 +196,7 @@ Response Body
 ```
 
 #### Delete User Account
+
 API
 ```bash
 /api/users/delete
@@ -204,7 +207,8 @@ Request Header
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### Change User Password 
+#### Change User Password
+
 API
 ```bash
 /api/auth/change-password
@@ -225,6 +229,7 @@ Request Body
 ```
 
 #### Get Restaurant List
+
 API
 ```bash
 /api/restaurants/search?name=
@@ -284,6 +289,8 @@ Response Body
 ```
 
 #### Get Restaurant Details by Name
+
+API
 ```bash
 /api/restaurants/search?name=Grammons%20Restaurant
 ```
@@ -321,6 +328,7 @@ Response Body
 ```
 
 #### Reserve Restaurant Table
+
 API
 ```bash
 /api/restaurants/save-table-reservation/1
@@ -332,14 +340,17 @@ Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJV
 ```
 
 #### Receive User's Table Reservation History
+
 API
 ```bash
 /api/restaurants/my-table-reservations
 ```
+
 Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
+
 Response Body
 ```bash
 [
@@ -357,6 +368,7 @@ Response Body
 ```
 
 #### Change Restaurant Table Reservation Status
+
 API
 ```bash
 /api/restaurants/change-status
@@ -379,6 +391,7 @@ Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJV
 API - /graphql
 
 #### User Registration
+
 Request
 ```bash
 mutation RegisterUser {
@@ -398,6 +411,7 @@ mutation RegisterUser {
 ```
 
 #### User Login
+
 Request
 ```bash
 mutation LoginUser {
@@ -411,6 +425,7 @@ mutation LoginUser {
 ```
 
 #### Get User Profile
+
 Header
 ```bash
 {
@@ -438,6 +453,7 @@ query {
 ```
 
 #### Edit User Data
+
 Header
 ```bash
 {
@@ -461,6 +477,7 @@ mutation UserEditDto {
 ```
 
 #### Change User Password
+
 Header
 ```bash
 {
