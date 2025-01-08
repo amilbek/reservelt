@@ -53,10 +53,10 @@ cd reservelt-backend
 ```bash
 mvn clean install
 ```
-
+```bash
+mvn spring-boot:run
+```
 Backend is available on http://localhost:8080
-
-Run the project
 
 Rest API Documentation (Open API): http://localhost:8080/swagger-ui/index.html#/
 
