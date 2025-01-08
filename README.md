@@ -88,6 +88,9 @@ npm run dev
 
 Frontend (with Vue.js) is avaialble on http://localhost:3000/
 
+### User Credentials
+email - email@mail.com
+password - Qwerty123!
 
 ### REST API
 #### register 
@@ -374,3 +377,72 @@ mutation LoginUser {
 ```
 
 #### user profile
+Header
+```bash
+{
+   "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmNvbSIsInJvbGUiOlsiVVNFUiJdLCJpYXQiOjE3MzYzNDg2MTUsImV4cCI6MTczNjM4NDYxNX0.YEe9FNPyoCTAH5ySEPiAyptd6CJr1gULyXnLzdiv8jcpG64goDaPCUfbel7eq0IV9CMrx1QZ6l2X6aEs4323Gw"
+}
+```
+
+Request
+```bash
+query {
+      user {
+        id
+        firstName
+        lastName
+        birthDate
+        email
+        country {
+          name
+        }
+        city {
+          name
+        }
+      }
+    }
+```
+
+#### edit user
+Header
+```bash
+{
+   "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmNvbSIsInJvbGUiOlsiVVNFUiJdLCJpYXQiOjE3MzYzNDg2MTUsImV4cCI6MTczNjM4NDYxNX0.YEe9FNPyoCTAH5ySEPiAyptd6CJr1gULyXnLzdiv8jcpG64goDaPCUfbel7eq0IV9CMrx1QZ6l2X6aEs4323Gw"
+}
+```
+
+Request 
+```bash
+mutation UserEditDto {
+  edit_user(input: {
+    firstName: "Thomas"
+    lastName: "Shelby"
+    birthDate: "1972-12-12"
+    country: 1
+    city: 1
+  }) {
+    id
+  }
+}
+```
+
+#### change password
+Header
+```bash
+{
+   "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmNvbSIsInJvbGUiOlsiVVNFUiJdLCJpYXQiOjE3MzYzNDg2MTUsImV4cCI6MTczNjM4NDYxNX0.YEe9FNPyoCTAH5ySEPiAyptd6CJr1gULyXnLzdiv8jcpG64goDaPCUfbel7eq0IV9CMrx1QZ6l2X6aEs4323Gw"
+}
+```
+
+Request 
+```bash
+mutation ChangeUserPasswordDto {
+  edit_user(input: {
+    currentPassword: "Qwerty123!"
+    newPassword: "Qwerty123!"
+    newPasswordConfirmation: "Qwerty123!"
+  }) {
+    string
+  }
+}
+```
