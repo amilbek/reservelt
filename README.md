@@ -12,7 +12,7 @@
     - [How to Run reservelt-frontend](#how-to-run-reservelt-frontend)
 3. [User Credentials](#user-credentials)
 4. [REST API](#rest-api)
-    - [User Registration](#user-registration-rest)
+    - [User Registration Rest](#user-registration-rest)
     - [User Login](#user-login-rest)
     - [Edit User Data](#edit-user-data-rest)
     - [Change User Password](#change-user-password-rest)
