@@ -339,3 +339,38 @@ request header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
+
+
+### GraphQL API
+#### register
+request 
+```bash
+mutation RegisterUser {
+  registerUser(input: {
+    firstName: "Thomas"
+    lastName: "Shelby"
+    birthDate: "1972-12-12"
+    country: 1
+    city: 1
+    email: "email@mail.de"
+    password: "Qwerty123!"
+    passwordConfirmation: "Qwerty123!"
+  }) {
+    id
+  }
+}
+```
+
+#### login
+```bash
+mutation LoginUser {
+  loginUser(input: {
+    email: "email@mail.de"
+    password: "Qwerty123!"
+  }) {
+    token
+  }
+}
+```
+
+#### user profile
