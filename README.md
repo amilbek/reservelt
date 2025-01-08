@@ -88,17 +88,21 @@ npm run dev
 
 Frontend (with Vue.js) is avaialble on http://localhost:3000/
 
-### User Credentials
-email - email@mail.com
-password - Qwerty123!
+### 🚀 User Credentials
+
+- **Email**: `email@mail.com`
+- **Password**: `Qwerty123!`
+
 
 ### REST API
-#### register 
-api
+
+#### User Registration 
+API
 ```bash
 /api/auth/register
 ```
-request body
+
+Request Body
 ```bash
 {
     "firstName": "Thomas",
@@ -113,32 +117,38 @@ request body
 ```
 
 #### login
-api
+
+API
 ```bash
 /api/auth/login
 ```
-request body
+
+Request Body
 ```bash
 {
     "email": "email@mail.de",
     "password": "Qwerty123!"
 }
 ```
-response body
+
+Response Body
 ```bash
 eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### edit user data 
-api
+#### Edit User Data 
+
+API
 ```bash
 /api/auth/edit
 ```
-request header
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
-request body
+
+Request Body
 ```bash
 {
     "firstName": "Thomas",
@@ -149,16 +159,18 @@ request body
 }
 ```
 
-#### user profile
-api
+#### Get User Profile
+API
 ```bash
 /api/users
 ```
-request header
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
-response body
+
+Response Body
 ```bash
 {
     "id": "a7f4f21f-22a2-4061-8ebf-3394b7658218",
@@ -181,26 +193,29 @@ response body
 }
 ```
 
-#### delete user account
-api
+#### Delete User Account
+API
 ```bash
 /api/users/delete
 ```
-request header
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### change password 
-api
+#### Change User Password 
+API
 ```bash
 /api/auth/change-password
 ```
-request header
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
-request body
+
+Request Body
 ```bash
 {
     "currentPassword": "Qwerty123!",
@@ -208,15 +223,19 @@ request body
     "newPasswordConfirmation": "Qwerty123!"
 }
 ```
-#### receiven restaurant list
+
+#### Get Restaurant List
+API
 ```bash
 /api/restaurants/search?name=
 ```
-request header
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
-response body
+
+Response Body
 ```bash
 [
     {
@@ -264,15 +283,17 @@ response body
 ]
 ```
 
-#### receive restaurant by name
+#### Get Restaurant Details by Name
 ```bash
 /api/restaurants/search?name=Grammons%20Restaurant
 ```
-request header
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
-response body
+
+Response Body
 ```bash
 [
     {
@@ -299,26 +320,27 @@ response body
 ]
 ```
 
-#### save table reservations
-api
+#### Reserve Restaurant Table
+API
 ```bash
 /api/restaurants/save-table-reservation/1
 ```
-request header
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### receive table reservation history
-api
+#### Receive User's Table Reservation History
+API
 ```bash
 /api/restaurants/my-table-reservations
 ```
-request header
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
-response body
+Response Body
 ```bash
 [
     {
@@ -334,19 +356,30 @@ response body
 ]
 ```
 
-#### change reservation status
+#### Change Restaurant Table Reservation Status
+API
 ```bash
-http://localhost:8080/api/restaurants/change-status?reservationId=2&newStatus=CANCELLED
+/api/restaurants/change-status
 ```
-request header
+
+Request Parameters
+```bash
+reservationId=2
+newStatus=CANCELLED
+```
+
+Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
 
 ### GraphQL API
-#### register
-request 
+
+API - /graphql
+
+#### User Registration
+Request
 ```bash
 mutation RegisterUser {
   registerUser(input: {
@@ -364,7 +397,8 @@ mutation RegisterUser {
 }
 ```
 
-#### login
+#### User Login
+Request
 ```bash
 mutation LoginUser {
   loginUser(input: {
@@ -376,7 +410,7 @@ mutation LoginUser {
 }
 ```
 
-#### user profile
+#### Get User Profile
 Header
 ```bash
 {
@@ -403,7 +437,7 @@ query {
     }
 ```
 
-#### edit user
+#### Edit User Data
 Header
 ```bash
 {
@@ -426,7 +460,7 @@ mutation UserEditDto {
 }
 ```
 
-#### change password
+#### Change User Password
 Header
 ```bash
 {
