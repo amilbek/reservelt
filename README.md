@@ -211,7 +211,7 @@ Request Body
     "lastName": "Shelby",
     "birthDate": "1972-12-12",
     "country": 1,
-    "city": 1,
+    "city": 1
 }
 ```
 
