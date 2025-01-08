@@ -17,7 +17,7 @@
     </div>
     <form class="form-signin" method="post" action="/auth/register">
         <h2 class="form-signin-heading">Registration</h2>
-        <span th:text="${failed}" style="color: red;"></span>
+        <span th:text="${failed}" class="errorMessage"></span>
 
         <p>
             <label for="firstname" class="sr-only">First Name</label>
@@ -62,7 +62,9 @@
         <div class="btn-container">
             <button class="btn" type="submit">Sign up</button><br>
         </div>
-        <p><a href="/auth/login">Already have an account?</a></p>
+        <div class="bottom_btns">
+            <p><a href="/auth/login">Already have an account?</a></p>
+        </div>
     </form>
 </div>
 

@@ -12,29 +12,31 @@
 </head>
 
 <body>
-<div class="container">
+<div class="login-container">
   <div class="right-corner-btn">
     <a href="/restaurants/search" class="btn btn-success mb-3">Search Restaurants</a>
   </div>
   <form class="form-signin" method="post" action="/auth/login">
-    <h2 class="form-signin-heading">Please sign in</h2>
+    <h2 class="form-signin-heading">Login</h2>
     <div th:if="${session.errorMessage}">
-      <p th:text="${session.errorMessage}" style="color: red;"></p>
+      <p th:text="${session.errorMessage}" class="errorMessage"></p>
     </div>
-    <span th:text="${success}" style="color: green;"></span>
-    <span th:text="${failed}" style="color: red;"></span>
+    <span th:text="${success}" class="successMessage"></span>
+    <span th:text="${failed}" class="errorMessage"></span>
     <p>
-      <label for="username" class="sr-only">Username</label>
-      <input type="text" id="username" name="email" class="form-control" placeholder="Username" required autofocus>
+      <label for="username" class="sr-only">Email</label>
+      <input type="text" id="username" name="email" class="form-control" placeholder="Email" required autofocus>
     </p>
     <p>
       <label for="password" class="sr-only">Password</label>
       <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
     </p>
     <div class="btn-container">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button><br>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button><br>
     </div>
-    <p><a href="/auth/register">Do you want to register?</a></p>
+    <div class="bottom_btns">
+      <p><a href="/auth/register">Do you want to register?</a></p>
+    </div>
   </form>
 </div>
 

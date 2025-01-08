@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-        window.location.href = "login.html";
+        window.location.href = "/login";
         return;
     }
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("logoutButton").addEventListener("click", () => {
         localStorage.removeItem("authToken");
         localStorage.setItem("successMessage", "You have been logged out successfully!");
-        window.location.href = "login.html";
+        window.location.href = "/login";
     });
 
     document.getElementById("openDeleteModalBtn").addEventListener("click", () => {
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
         if (!token) {
-            window.location.href = "login.html";
+            window.location.href = "/login";
             return;
         }
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             localStorage.removeItem("authToken");
             localStorage.setItem("successMessage", "Your account has been deleted successfully!");
-            window.location.href = "login.html";
+            window.location.href = "/login";
         } catch (error) {
             console.error("Error deleting account:", error);
             errorMessage.textContent = error.message || "An error occurred while deleting your account.";

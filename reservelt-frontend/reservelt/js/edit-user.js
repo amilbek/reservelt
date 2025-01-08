@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:8080";
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('authToken');
     if (!token) {
-        window.location.href = 'login.html';
+        window.location.href = '/login';
         return;
     }
 
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
                 if (responseData.data?.edit_user?.id) {
                     localStorage.setItem('successMessage', 'User details updated successfully!');
-                    window.location.href = 'profile.html';
+                    window.location.href = '/profile';
                 } else {
                     throw new Error('Updating user data failed! Please check the details.');
                 }
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
         
                 localStorage.setItem('successMessage', 'User details updated successfully!');
-                window.location.href = 'profile.html';
+                window.location.href = '/profile';
             }
         } catch (error) {
             console.error('Error updating user data:', error);
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("logoutButton").addEventListener("click", () => {
         localStorage.removeItem("authToken");
         localStorage.setItem("successMessage", "You have been logged out successfully!");
-        window.location.href = "login.html";
+        window.location.href = "/login";
     });
 });
 

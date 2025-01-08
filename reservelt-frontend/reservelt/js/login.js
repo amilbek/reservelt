@@ -56,7 +56,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
                 localStorage.setItem('authToken', token);
                 successMessage.textContent = 'Login successful! Redirecting...';
                 successMessage.style.display = 'block';
-                window.location.href = 'profile.html';
+                window.location.href = '/profile';
             } else {
                 throw new Error('Token missing in response');
             }
@@ -79,7 +79,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
                 localStorage.setItem('authToken', token);
                 successMessage.textContent = 'Login successful! Redirecting...';
                 successMessage.style.display = 'block';
-                window.location.href = 'profile.html';
+                window.location.href = '/profile';
             } else {
                 throw new Error('Token missing in response');
             }

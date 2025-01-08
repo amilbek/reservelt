@@ -172,13 +172,6 @@
     border-radius: 4px;
     font-size: 14px;
   }
-  .form-control-select {
-    width: 475px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
   .form-control:focus {
     border-color: #42b883;
     outline: none;

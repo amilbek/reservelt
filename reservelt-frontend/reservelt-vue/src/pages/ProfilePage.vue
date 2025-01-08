@@ -292,27 +292,4 @@
     text-align: center;
     margin-bottom: 10px;
   }
-
-  .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-
-  .btn-primary {
-    background-color: #007bff;
-    color: white;
-  }
-
-  .btn-danger {
-    background-color: #dc3545;
-    color: white;
-  }
-
-  .btn-primary:hover,
-  .btn-danger:hover {
-    opacity: 0.8;
-  }
 </style>

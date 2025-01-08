@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:8080";
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('authToken');
     if (!token) {
-        window.location.href = 'login.html';
+        window.location.href = '/login';
         return;
     }
 
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             localStorage.setItem('successMessage', 'Password changed successfully!');
-            window.location.href = 'profile.html';
+            window.location.href = '/profile';
         } catch (error) {
             handleFieldErrors(error.message);
         }
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("logoutButton").addEventListener("click", () => {
         localStorage.removeItem("authToken");
         localStorage.setItem("successMessage", "You have been logged out successfully!");
-        window.location.href = "login.html";
+        window.location.href = "/login";
     });
 
     async function changePasswordGraphQL(data, token) {

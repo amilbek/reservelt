@@ -46,6 +46,12 @@ h1 {
     margin-bottom: 20px;
 }
 
+.no-reservations {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -90,10 +96,8 @@ th {
     opacity: 0.8;
 }
 
-.text-success {
-    color: green;
-}
-
-.text-muted {
-    color: gray;
+h1 {
+    text-align: center;
+    color: #42b883;
+    margin-bottom: 30px;
 }

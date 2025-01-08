@@ -83,7 +83,7 @@ async function handleFormSubmit(event) {
 
             if (data.data?.register_user?.id) {
                 localStorage.setItem('successMessage', 'Successfully Registered!');
-                window.location.href = 'login.html';
+                window.location.href = '/login';
             } else {
                 displayGeneralError('Registration failed! Please check the details.');
             }
@@ -103,7 +103,7 @@ async function handleFormSubmit(event) {
 
             if (response.ok && data.id) {
                 localStorage.setItem('successMessage', 'Successfully Registered!');
-                window.location.href = 'login.html';
+                window.location.href = '/login';
             } else {
                 handleFieldErrors([{ message: data.message }]);
             }

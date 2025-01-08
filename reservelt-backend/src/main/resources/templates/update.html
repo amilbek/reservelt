@@ -15,10 +15,10 @@
 <nav class="navbar">
     <div class="logo">Reservelt</div>
     <div class="nav-links">
-        <a href="/restaurants/search" class="btn">Search Restaurants</a>
-        <a href="/restaurants/my-reservations" class="btn">My Reservations</a>
-        <a href="/users" class="btn">Profile</a>
-        <a href="/users/change-password" class="btn btn-warning">Change Password</a>
+        <a href="/restaurants/search">Search Restaurants</a>
+        <a href="/restaurants/my-reservations">My Reservations</a>
+        <a href="/users">Profile</a>
+        <a href="/users/change-password">Change Password</a>
         <a href="/auth/logout" class="btn">Log out</a>
     </div>
 </nav>
@@ -27,7 +27,7 @@
     <div th:each="u : ${user}">
         <form class="form-signin" method="post" action="/users/edit">
             <h2>Edit Profile</h2>
-            <span th:text="${failed}" style="color: red;"></span>
+            <span th:text="${failed}" class="errorMessage"></span>
             <table>
                 <tr>
                     <th>
@@ -82,8 +82,10 @@
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-primary" type="submit">Save Changes</button>
-            <a href="/users" class="btn btn-warning">Cancel</a>
+            <div class="btn-container">
+                <button class="btn btn-primary" type="submit">Save Changes</button>
+                <a href="/users" class="btn btn-warning">Cancel</a>
+            </div>
         </form>
     </div>
 </div>
