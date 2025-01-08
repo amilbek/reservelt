@@ -87,3 +87,121 @@ npm run dev
 ```
 
 Frontend (with Vue.js) is avaialble on http://localhost:3000/
+
+
+### REST API
+#### register 
+api
+```bash
+/api/auth/register
+```
+request body
+```bash
+{
+    "firstName": "Thomas",
+    "lastName": "Shelby",
+    "birthDate": "1972-12-12",
+    "country": 1,
+    "city": 1,
+    "email": "email@mail.de",
+    "password": "Qwerty123!",
+    "passwordConfirmation": "Qwerty123!"
+}
+```
+
+#### login
+api
+```bash
+/api/auth/login
+```
+request body
+```bash
+{
+    "email": "email@mail.de",
+    "password": "Qwerty123!"
+}
+```
+response body
+```bash
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+
+#### edit user data 
+api
+```bash
+/api/auth/edit
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+request body
+```bash
+{
+    "firstName": "Thomas",
+    "lastName": "Shelby",
+    "birthDate": "1972-12-12",
+    "country": 1,
+    "city": 1,
+}
+```
+
+#### user profile
+api
+```bash
+/api/users
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+response body
+```bash
+{
+    "id": "a7f4f21f-22a2-4061-8ebf-3394b7658218",
+    "firstName": "John",
+    "lastName": "Doe",
+    "birthDate": "1989-12-31",
+    "country": {
+        "id": 1,
+        "name": "Germany"
+    },
+    "city": {
+        "id": 1,
+        "name": "Dortmund",
+        "country": {
+            "id": 1,
+            "name": "Germany"
+        }
+    },
+    "email": "email@mail.com"
+}
+```
+
+#### delete user account
+api
+```bash
+/api/users/delete
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+
+#### change password 
+api
+```bash
+/api/auth/change-password
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+request body
+```bash
+{
+    "currentPassword": "Qwerty123!",
+    "newPassword": "Qwerty123!",
+    "newPasswordConfirmation": "Qwerty123!"
+}
+```
