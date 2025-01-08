@@ -205,3 +205,137 @@ request body
     "newPasswordConfirmation": "Qwerty123!"
 }
 ```
+#### receiven restaurant list
+```bash
+/api/restaurants/search?name=
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+response body
+```bash
+[
+    {
+        "id": 1,
+        "name": "Grammons Restaurant",
+        "address": "Wieckesweg 29, 44309 Dortmund",
+        "phoneNumber": "+49 231 93144465",
+        "rating": "4.6",
+        "foods": [
+            {
+                "id": 1,
+                "name": "Hamburger",
+                "description": "Hamburger mit Butter und Salat",
+                "price": 8.20
+            },
+            {
+                "id": 2,
+                "name": "Pizza",
+                "description": "Pizza mit Tomaten und Paprika",
+                "price": 10.50
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "The Stage",
+        "address": "Dula Center, Nortkirchenstraße 53, 44263 Dortmund",
+        "phoneNumber": "+49 231 2222550",
+        "rating": "4.7",
+        "foods": [
+            {
+                "id": 3,
+                "name": "Burger",
+                "description": "Burger mit Butter und Kasse",
+                "price": 7.50
+            },
+            {
+                "id": 4,
+                "name": "Pizza suchi",
+                "description": "Pizza mit Tomaten und Paprika",
+                "price": 10.50
+            }
+        ]
+    }
+]
+```
+
+#### receive restaurant by name
+```bash
+/api/restaurants/search?name=Grammons%20Restaurant
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+response body
+```bash
+[
+    {
+        "id": 1,
+        "name": "Grammons Restaurant",
+        "address": "Wieckesweg 29, 44309 Dortmund",
+        "phoneNumber": "+49 231 93144465",
+        "rating": "4.6",
+        "foods": [
+            {
+                "id": 1,
+                "name": "Hamburger",
+                "description": "Hamburger mit Butter und Salat",
+                "price": 8.20
+            },
+            {
+                "id": 2,
+                "name": "Pizza",
+                "description": "Pizza mit Tomaten und Paprika",
+                "price": 10.50
+            }
+        ]
+    }
+]
+```
+
+#### save table reservations
+api
+```bash
+/api/restaurants/save-table-reservation/1
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+
+#### receive table reservation history
+api
+```bash
+/api/restaurants/my-table-reservations
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+response body
+```bash
+[
+    {
+        "id": 1,
+        "restaurantName": "The Stage",
+        "tableReservationStatus": "COMPLETED"
+    },
+    {
+        "id": 2,
+        "restaurantName": "Grammons Restaurant",
+        "tableReservationStatus": "RESERVED"
+    }
+]
+```
+
+#### change reservation status
+```bash
+http://localhost:8080/api/restaurants/change-status?reservationId=2&newStatus=CANCELLED
+```
+request header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
