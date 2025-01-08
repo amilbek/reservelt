@@ -137,7 +137,7 @@ Request Body
 }
 ```
 
-#### User Login
+#### User Login (REST)
 
 API
 ```bash
@@ -157,7 +157,7 @@ Response Body
 eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### Get User Profile
+#### Get User Profile (REST)
 
 API
 ```bash
@@ -192,7 +192,7 @@ Response Body
 }
 ```
 
-#### Edit User Data 
+#### Edit User Data (REST)
 
 API
 ```bash
@@ -215,7 +215,7 @@ Request Body
 }
 ```
 
-#### Change User Password
+#### Change User Password (REST)
 
 API
 ```bash
@@ -236,7 +236,7 @@ Request Body
 }
 ```
 
-#### Delete User Account
+#### Delete User Account (REST)
 
 API
 ```bash
@@ -248,7 +248,7 @@ Request Header
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### Get Restaurant List
+#### Get Restaurant List (REST)
 
 API
 ```bash
@@ -308,7 +308,7 @@ Response Body
 ]
 ```
 
-#### Get Restaurant Details by Name
+#### Get Restaurant Details by Name (REST)
 
 API
 ```bash
@@ -347,7 +347,7 @@ Response Body
 ]
 ```
 
-#### Reserve Restaurant Table
+#### Reserve Restaurant Table (REST)
 
 API
 ```bash
@@ -359,7 +359,7 @@ Request Header
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### Receive User's Table Reservation History
+#### Receive User's Table Reservation History (REST)
 
 API
 ```bash
@@ -387,7 +387,7 @@ Response Body
 ]
 ```
 
-#### Change Restaurant Table Reservation Status
+#### Change Restaurant Table Reservation Status (REST)
 
 API
 ```bash
@@ -410,7 +410,7 @@ Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJV
 
 API - /graphql
 
-#### User Registration
+#### User Registration (GraphQL)
 
 Request
 ```bash
@@ -430,7 +430,7 @@ mutation RegisterUser {
 }
 ```
 
-#### User Login
+#### User Login (GraphQL)
 
 Request
 ```bash
@@ -444,7 +444,7 @@ mutation LoginUser {
 }
 ```
 
-#### Get User Profile
+#### Get User Profile (GraphQL)
 
 Header
 ```bash
@@ -472,7 +472,7 @@ query {
     }
 ```
 
-#### Edit User Data
+#### Edit User Data (GraphQL)
 
 Header
 ```bash
@@ -496,7 +496,7 @@ mutation UserEditDto {
 }
 ```
 
-#### Change User Password
+#### Change User Password (GraphQL)
 
 Header
 ```bash
@@ -518,7 +518,7 @@ mutation ChangeUserPasswordDto {
 }
 ```
 
-#### Delete User Account
+#### Delete User Account (GraphQL)
 
 Header
 ```bash
