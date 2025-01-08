@@ -7,8 +7,14 @@
 ## Table of Contents
 1. [Project Structure](#project-structure)
 2. [Getting Started](#getting-started)
-3. [Backend - Reservelt Backend](#backend---reservelt-backend)
-4. [Frontend - Reservelt Frontend](#frontend---reservelt-frontend)
+    - [Prerequisites](#prerequisites)
+    - [How to Run reservelt-backend](#how-to-run-reservelt-backend)
+    - [How to Run reservelt-frontend](#how-to-run-reservelt-frontend)
+3. [User Credentials](#user-credentials)
+4. [REST API](#rest-api)
+    - [User Registration](#user-registration)
+    - [User Login](#user-login)
+5. [GraphQL API](#graphql-api)
 ---
 
 ## Project Structure
