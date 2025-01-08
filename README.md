@@ -10,26 +10,26 @@
     - [Prerequisites](#prerequisites)
     - [How to Run reservelt-backend](#how-to-run-reservelt-backend)
     - [How to Run reservelt-frontend](#how-to-run-reservelt-frontend)
-3. [User Credentials](#user-credentials)
+3. [User Credentials](#-user-credentials)
 4. [REST API](#rest-api)
-    - [User Registration Rest](#user-registration-rest)
-    - [User Login](#user-login-rest)
-    - [Edit User Data](#edit-user-data-rest)
-    - [Change User Password](#change-user-password-rest)
-    - [Get User Profile](#get-user-profile-rest)
-    - [Delete User Account](#delete-user-account-rest)
-    - [Get Restaurant List](#get-restaurant-list-rest)
-    - [Get Restaurant Details by Name](#get-restaurant-details-by-name-rest)
-    - [Reserve Restaurant Table](#reserve-restaurant-table-rest)
-    - [Receive User's Table Reservation History](#receive-users-table-reservation-history-rest)
-    - [Change Restaurant Table Reservation Status](#change-restaurant-table-reservation-status-rest)
+    - [User Registration (REST)](#user-registration-rest)
+    - [User Login (REST)](#user-login-rest)
+    - [Edit User Data (REST)](#edit-user-data-rest)
+    - [Change User Password (REST)](#change-user-password-rest)
+    - [Get User Profile (REST)](#get-user-profile-rest)
+    - [Delete User Account (REST)](#delete-user-account-rest)
+    - [Get Restaurant List (REST)](#get-restaurant-list-rest)
+    - [Get Restaurant Details by Name (REST)](#get-restaurant-details-by-name-rest)
+    - [Reserve Restaurant Table (REST)](#reserve-restaurant-table-rest)
+    - [Receive User's Table Reservation History (REST)](#receive-users-table-reservation-history-rest)
+    - [Change Restaurant Table Reservation Status (REST)](#change-restaurant-table-reservation-status-rest)
 5. [GraphQL API](#graphql-api)
-    - [User Registration](#user-registration-graphql)
-    - [User Login](#user-login-graphql)
-    - [Get User Profile](#get-user-profile-graphql)
-    - [Edit User Data](#edit-user-data-graphql)
-    - [Change User Password](#change-user-password-graphql)
-    - [Delete User Account](#delete-user-account-graphql)
+    - [User Registration (GraphQL)](#user-registration-graphql)
+    - [User Login (GraphQL)](#user-login-graphql)
+    - [Get User Profile (GraphQL)](#get-user-profile-graphql)
+    - [Edit User Data (GraphQL)](#edit-user-data-graphql)
+    - [Change User Password (GraphQL)](#change-user-password-graphql)
+    - [Delete User Account (GraphQL)](#delete-user-account-graphql)
 
 ## Project Structure
 
@@ -116,7 +116,7 @@ Frontend (with Vue.js) is avaialble on http://localhost:3000/
 
 ### REST API
 
-#### User Registration 
+#### User Registration (REST)
 
 API
 ```bash
