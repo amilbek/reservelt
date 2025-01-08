@@ -12,10 +12,24 @@
     - [How to Run reservelt-frontend](#how-to-run-reservelt-frontend)
 3. [User Credentials](#user-credentials)
 4. [REST API](#rest-api)
-    - [User Registration](#user-registration)
-    - [User Login](#user-login)
+    - [User Registration](#user-registration-rest)
+    - [User Login](#user-login-rest)
+    - [Edit User Data](#edit-user-data-rest)
+    - [Change User Password](#change-user-password-rest)
+    - [Get User Profile](#get-user-profile-rest)
+    - [Delete User Account](#delete-user-account-rest)
+    - [Get Restaurant List](#get-restaurant-list-rest)
+    - [Get Restaurant Details by Name](#get-restaurant-details-by-name-rest)
+    - [Reserve Restaurant Table](#reserve-restaurant-table-rest)
+    - [Receive User's Table Reservation History](#receive-users-table-reservation-history-rest)
+    - [Change Restaurant Table Reservation Status](#change-restaurant-table-reservation-status-rest)
 5. [GraphQL API](#graphql-api)
----
+    - [User Registration](#user-registration-graphql)
+    - [User Login](#user-login-graphql)
+    - [Get User Profile](#get-user-profile-graphql)
+    - [Edit User Data](#edit-user-data-graphql)
+    - [Change User Password](#change-user-password-graphql)
+    - [Delete User Account](#delete-user-account-graphql)
 
 ## Project Structure
 
@@ -143,29 +157,6 @@ Response Body
 eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
-#### Edit User Data 
-
-API
-```bash
-/api/auth/edit
-```
-
-Request Header
-```bash
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
-```
-
-Request Body
-```bash
-{
-    "firstName": "Thomas",
-    "lastName": "Shelby",
-    "birthDate": "1972-12-12",
-    "country": 1,
-    "city": 1,
-}
-```
-
 #### Get User Profile
 
 API
@@ -201,16 +192,27 @@ Response Body
 }
 ```
 
-#### Delete User Account
+#### Edit User Data 
 
 API
 ```bash
-/api/users/delete
+/api/auth/edit
 ```
 
 Request Header
 ```bash
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
+```
+
+Request Body
+```bash
+{
+    "firstName": "Thomas",
+    "lastName": "Shelby",
+    "birthDate": "1972-12-12",
+    "country": 1,
+    "city": 1,
+}
 ```
 
 #### Change User Password
@@ -232,6 +234,18 @@ Request Body
     "newPassword": "Qwerty123!",
     "newPasswordConfirmation": "Qwerty123!"
 }
+```
+
+#### Delete User Account
+
+API
+```bash
+/api/users/delete
+```
+
+Request Header
+```bash
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmRlIiwicm9sZSI6WyJVU0VSIl0sImlhdCI6MTczNjMzNTEwMiwiZXhwIjoxNzM2MzcxMTAyfQ.rHR4GJ01wUHR_LosWP6zxtW5-cAwHuH7Q86xY0zLr2wpFhBI73QH-TVnd88sKvKbvaocKg9yahILQhbDBJChHg
 ```
 
 #### Get Restaurant List
@@ -501,5 +515,21 @@ mutation ChangeUserPasswordDto {
   }) {
     string
   }
+}
+```
+
+#### Delete User Account
+
+Header
+```bash
+{
+   "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbWFpbEBtYWlsLmNvbSIsInJvbGUiOlsiVVNFUiJdLCJpYXQiOjE3MzYzNDg2MTUsImV4cCI6MTczNjM4NDYxNX0.YEe9FNPyoCTAH5ySEPiAyptd6CJr1gULyXnLzdiv8jcpG64goDaPCUfbel7eq0IV9CMrx1QZ6l2X6aEs4323Gw"
+}
+```
+
+Request
+```bash
+mutation {
+    delete_user
 }
 ```
