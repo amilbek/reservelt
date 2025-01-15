@@ -31,7 +31,7 @@
     </form>
 
     <!-- Search Results -->
-    <h1>Search Results</h1>
+<!--    <h1>Search Results</h1>-->
     <div v-if="isLoading">Loading...</div>
     <div v-else-if="restaurants.length === 0">
       <h5>No restaurants found.</h5>
@@ -90,6 +90,28 @@
       };
     },
     methods: {
+      async loadFirstRestaurant() {
+        this.isLoading = true;
+        try {
+          const response = await fetch('http://localhost:8080/api/restaurants');
+          if (response.ok) {
+            const data = await response.json();
+
+            if (Array.isArray(data) && data.length > 0) {
+              this.restaurants = data;
+            } else {
+              this.restaurants = [];
+            }
+          } else {
+            alert('Error fetching data');
+          }
+        } catch (error) {
+          console.error('Error fetching restaurants:', error);
+          alert('Error fetching restaurants.');
+        } finally {
+          this.isLoading = false;
+        }
+      },
       async searchRestaurants() {
         this.isLoading = true;
         try {
@@ -141,6 +163,7 @@
     },
     mounted() {
       this.checkAuthStatus();
+      this.loadFirstRestaurant();
     },
   };
 </script>

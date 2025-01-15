@@ -10,6 +10,7 @@ public class SearchRequestDTO {
     // Getter and Setter
     private String name;
 
+
     // Constructors
     public SearchRequestDTO() {}
 

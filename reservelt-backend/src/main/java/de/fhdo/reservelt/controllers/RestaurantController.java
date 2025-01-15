@@ -43,7 +43,7 @@ public class RestaurantController {
 
     @PostMapping("/search")
     public String searchRestaurants(SearchRequestDTO searchRequest, Model model) {
-        List<RestaurantDTO> restaurants = restaurantService.searchRestaurants(searchRequest.getName());
+        List<RestaurantDTO> restaurants = restaurantService.searchRestaurants(searchRequest.getName(), searchRequest.getName());
         model.addAttribute("restaurants", restaurants);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

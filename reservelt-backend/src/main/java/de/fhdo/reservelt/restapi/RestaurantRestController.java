@@ -38,7 +38,7 @@ public class RestaurantRestController {
 
     @GetMapping("/search")
     public List<RestaurantDTO> searchRestaurants(@RequestParam String name) {
-        return restaurantService.searchRestaurants(name);
+        return restaurantService.searchRestaurants(name, name);
     }
 
     @GetMapping("/{id}")

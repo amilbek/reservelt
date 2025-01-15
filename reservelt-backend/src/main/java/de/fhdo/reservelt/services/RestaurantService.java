@@ -43,8 +43,8 @@ public class RestaurantService {
 //                .collect(Collectors.toList());
 //    }
 
-    public List<RestaurantDTO> searchRestaurants(String name) {
-        List<Restaurant> restaurants = restaurantRepository.findByNameContainingIgnoreCase(name);
+    public List<RestaurantDTO> searchRestaurants(String name, String foodName) {
+        List<Restaurant> restaurants = restaurantRepository.findByNameContainingIgnoreCaseOrFoodsNameContainingIgnoreCase(name, foodName);
         return restaurants.stream()
                 .map(r -> {
                     List<FoodDTO> foods = foodRepository.findAllByRestaurantId(r.getId())
